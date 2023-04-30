@@ -5,7 +5,8 @@ This is a web application designed to help software engineering job seekers prac
 
 ## Mock-Ups
 ![image](https://user-images.githubusercontent.com/90817505/235370805-39e7b081-dc06-4586-aa87-b1ef16cc8a66.png)
-![image](https://user-images.githubusercontent.com/90817505/235371173-7f930c92-d6ee-4daa-a910-da02f2d1fc0a.png)
+![image](https://user-images.githubusercontent.com/90817505/235371250-524574a1-3401-4f6f-8c3d-0745a66fbee0.png)
+
 Question Bank
 - The app includes a small bank of commonly asked behavioral questions in software engineering interviews. These questions are categorized based on different skills such as problem-solving, communication, teamwork, leadership, etc.
 
@@ -16,8 +17,7 @@ Recording Feature
 - The app allows users to record their responses to each question using their device's microphone. This feature helps users review their performance and identify areas for improvement.
 
 Feedback
-
-The app provides feedback on the quality of the responses based on a set of predefined criteria. The feedback could be in the form of a score or simple comments. This feature helps users understand their strengths and weaknesses in answering behavioral questions.
+-The app provides feedback on the quality of the responses based on a set of predefined criteria. The feedback could be in the form of a score or simple comments. This feature helps users understand their strengths and weaknesses in answering behavioral questions.
 
 Mock Interview
 - The app offers a basic mock interview feature where users can simulate a real interview scenario with pre-recorded questions. This feature helps users prepare for the actual interview and build confidence.
