@@ -1,4 +1,6 @@
-# iLVinterviews2 - Behavioral Interview Practice App
+# behavi.io - Behavioral Interview Practice App
+![image](https://user-images.githubusercontent.com/90817505/235345128-e6b95b4c-432e-467f-900c-138f06f29b8a.png)
+
 This is a web application designed to help software engineering job seekers practice for behavioral interviews. The application includes a small bank of commonly asked behavioral questions in software engineering interviews. It also has features to allow users to time their responses, record their answers, receive feedback, and simulate a mock interview scenario.
 
 Features
