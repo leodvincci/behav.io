@@ -1,8 +1,8 @@
 # behavi.io - Behavioral Interview Practice App
-![image](https://user-images.githubusercontent.com/90817505/235345128-e6b95b4c-432e-467f-900c-138f06f29b8a.png)
+![image](https://user-images.githubusercontent.com/90817505/235348393-b4e652d6-ff65-47c5-a762-40f1e3a45e32.png)
+
 
 This is a web application designed to help software engineering job seekers practice for behavioral interviews. The application includes a small bank of commonly asked behavioral questions in software engineering interviews. It also has features to allow users to time their responses, record their answers, receive feedback, and simulate a mock interview scenario.
-![image](https://user-images.githubusercontent.com/90817505/235348393-b4e652d6-ff65-47c5-a762-40f1e3a45e32.png)
 
 
 Features
