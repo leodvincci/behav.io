@@ -4,10 +4,8 @@ This is a web application designed to help software engineering job seekers prac
 
 
 ## Mock-Ups
-![Screenshot from 2023-04-30 13-18-32](https://user-images.githubusercontent.com/90817505/235369856-36e3d5ee-5a6b-4751-8df9-e7929c6a6200.png)
-
-![image](https://user-images.githubusercontent.com/90817505/235369849-ba1fc4bf-a227-47a3-a636-0bd5c3092ff1.png)
-## Features
+![image](https://user-images.githubusercontent.com/90817505/235370805-39e7b081-dc06-4586-aa87-b1ef16cc8a66.png)
+![image](https://user-images.githubusercontent.com/90817505/235370788-fb4dbe4b-6237-434b-a287-b3d94d3d022c.png)
 
 Question Bank
 - The app includes a small bank of commonly asked behavioral questions in software engineering interviews. These questions are categorized based on different skills such as problem-solving, communication, teamwork, leadership, etc.
