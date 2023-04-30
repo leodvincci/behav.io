@@ -3,7 +3,7 @@
 This is a web application designed to help software engineering job seekers practice for behavioral interviews. The application includes a small bank of commonly asked behavioral questions in software engineering interviews. It also has features to allow users to time their responses, record their answers, receive feedback, and simulate a mock interview scenario.
 
 
-## Screenshots
+## Mock-Ups
 
 ![Screenshot_from_2023-04-30_11-20-38-removebg-preview](https://user-images.githubusercontent.com/90817505/235364301-b844683a-a21e-4b2e-9749-2bbd7cebf08d.png)
 
