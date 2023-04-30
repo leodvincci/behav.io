@@ -4,10 +4,9 @@ This is a web application designed to help software engineering job seekers prac
 
 
 ## Mock-Ups
+![Screenshot from 2023-04-30 13-18-32](https://user-images.githubusercontent.com/90817505/235369856-36e3d5ee-5a6b-4751-8df9-e7929c6a6200.png)
 
-![image-removebg-preview (5)](https://user-images.githubusercontent.com/90817505/235368685-f63860cd-3842-4f12-803b-8ffd54a6b37f.png)
-![image-removebg-preview (7)](https://user-images.githubusercontent.com/90817505/235369004-12181842-9dac-4e66-9469-0921ff370bfd.png)
-
+![image](https://user-images.githubusercontent.com/90817505/235369849-ba1fc4bf-a227-47a3-a636-0bd5c3092ff1.png)
 ## Features
 
 Question Bank
