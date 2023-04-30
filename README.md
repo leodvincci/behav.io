@@ -6,8 +6,7 @@ This is a web application designed to help software engineering job seekers prac
 ## Mock-Ups
 
 ![image-removebg-preview (5)](https://user-images.githubusercontent.com/90817505/235368685-f63860cd-3842-4f12-803b-8ffd54a6b37f.png)
-![image-removebg-preview (6)](https://user-images.githubusercontent.com/90817505/235368689-e88386b4-96db-4869-b03e-666651c55df6.png)
-
+![image-removebg-preview (7)](https://user-images.githubusercontent.com/90817505/235369004-12181842-9dac-4e66-9469-0921ff370bfd.png)
 
 ## Features
 
