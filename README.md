@@ -4,8 +4,7 @@ This is a web application designed to help software engineering job seekers prac
 
 
 ## Mock-Ups
-![image](https://user-images.githubusercontent.com/90817505/235372172-a88f0631-2f1d-4399-9a74-86f5052dd35b.png)
-
+![image](https://user-images.githubusercontent.com/90817505/235392013-34fe6f01-d891-49e3-ab60-8bf15845f530.png)
 ![image](https://user-images.githubusercontent.com/90817505/235372142-871c6985-331b-434f-a481-7eb78c9efe56.png)
 
 Question Bank
