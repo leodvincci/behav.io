@@ -7,19 +7,19 @@ This is a web application designed to help software engineering job seekers prac
 ![image](https://user-images.githubusercontent.com/90817505/235392013-34fe6f01-d891-49e3-ab60-8bf15845f530.png)
 ![image](https://user-images.githubusercontent.com/90817505/235372142-871c6985-331b-434f-a481-7eb78c9efe56.png)
 
-Question Bank
+### Question Bank
 - The app includes a small bank of commonly asked behavioral questions in software engineering interviews. These questions are categorized based on different skills such as problem-solving, communication, teamwork, leadership, etc.
 
-Timer
+### Timer
 - The app includes a simple timer feature that allows users to set a specific time limit for their responses to each question. This feature helps simulate the pressure of a real interview.
 
-Recording Feature
+### Recording Feature
 - The app allows users to record their responses to each question using their device's microphone. This feature helps users review their performance and identify areas for improvement.
 
-Feedback
--The app provides feedback on the quality of the responses based on a set of predefined criteria. The feedback could be in the form of a score or simple comments. This feature helps users understand their strengths and weaknesses in answering behavioral questions.
+### Feedback
+- The app provides feedback on the quality of the responses based on a set of predefined criteria. The feedback could be in the form of a score or simple comments. This feature helps users understand their strengths and weaknesses in answering behavioral questions.
 
-Mock Interview
+### Mock Interview
 - The app offers a basic mock interview feature where users can simulate a real interview scenario with pre-recorded questions. This feature helps users prepare for the actual interview and build confidence.
 
 
