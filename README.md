@@ -3,9 +3,18 @@
 This is a web application designed to help software engineering job seekers practice for behavioral interviews. The application includes a small bank of commonly asked behavioral questions in software engineering interviews. It also has features to allow users to time their responses, record their answers, receive feedback, and simulate a mock interview scenario.
 
 
-## Mock-Ups
-![image](https://user-images.githubusercontent.com/90817505/235392013-34fe6f01-d891-49e3-ab60-8bf15845f530.png)
-![image](https://user-images.githubusercontent.com/90817505/235372142-871c6985-331b-434f-a481-7eb78c9efe56.png)
+## Mock-Ups - https://www.figma.com/proto/8WCyQR5etzP2usuD90qgPq/Untitled?node-id=83-214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=83%3A214
+Figma: https://www.figma.com/proto/8WCyQR5etzP2usuD90qgPq/Untitled?node-id=83-214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=83%3A214
+![image](https://user-images.githubusercontent.com/90817505/235760666-797a677e-ccb1-42c4-a39e-a4ae11ce68c3.png)
+![image](https://user-images.githubusercontent.com/90817505/235760686-2bc2b7f0-b354-4037-ac5b-84ee92123bd8.png)
+![image](https://user-images.githubusercontent.com/90817505/235760710-4bff7255-3473-46ad-b387-aa0eb7316b3d.png)
+![image](https://user-images.githubusercontent.com/90817505/235760755-9fd8e912-9100-47b4-8ea0-3bde5151302a.png)
+![image](https://user-images.githubusercontent.com/90817505/235760780-a40bb7d6-2269-47dd-a324-e7eb2260e71f.png)
+![image](https://user-images.githubusercontent.com/90817505/235760841-547586e4-8fe6-4923-a608-939a07d7ab01.png)
+![image](https://user-images.githubusercontent.com/90817505/235760871-3d0de1cd-7406-4b57-b7de-19aa8a7f9efa.png)
+![image](https://user-images.githubusercontent.com/90817505/235760899-411160a9-c88e-46bc-9793-18727fdaf53e.png)
+![image](https://user-images.githubusercontent.com/90817505/235760939-0c224d0e-c340-4fa8-8a14-99484a91f813.png)
+
 
 ### Question Bank
 - The app includes a small bank of commonly asked behavioral questions in software engineering interviews. These questions are categorized based on different skills such as problem-solving, communication, teamwork, leadership, etc.
