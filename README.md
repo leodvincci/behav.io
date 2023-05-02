@@ -7,7 +7,7 @@ This is a web application designed to help software engineering job seekers prac
 Figma: https://www.figma.com/proto/8WCyQR5etzP2usuD90qgPq/Untitled?node-id=83-214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=83%3A214
 ![image](https://user-images.githubusercontent.com/90817505/235760666-797a677e-ccb1-42c4-a39e-a4ae11ce68c3.png)
 ![image](https://user-images.githubusercontent.com/90817505/235760686-2bc2b7f0-b354-4037-ac5b-84ee92123bd8.png)
-![image](https://user-images.githubusercontent.com/90817505/235760710-4bff7255-3473-46ad-b387-aa0eb7316b3d.png)
+![image](https://user-images.githubusercontent.com/90817505/235805178-f6ad4a2d-5140-4055-8ccc-43a3219c19f2.png)
 ![image](https://user-images.githubusercontent.com/90817505/235760755-9fd8e912-9100-47b4-8ea0-3bde5151302a.png)
 ![image](https://user-images.githubusercontent.com/90817505/235760780-a40bb7d6-2269-47dd-a324-e7eb2260e71f.png)
 ![image](https://user-images.githubusercontent.com/90817505/235760841-547586e4-8fe6-4923-a608-939a07d7ab01.png)
