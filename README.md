@@ -3,7 +3,7 @@
 This is a web application designed to help software engineering job seekers practice for behavioral interviews. The application includes a small bank of commonly asked behavioral questions in software engineering interviews. It also has features to allow users to time their responses, record their answers, receive feedback, and simulate a mock interview scenario.
 
 
-## Mock-Ups - https://www.figma.com/proto/8WCyQR5etzP2usuD90qgPq/Untitled?node-id=83-214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=83%3A214
+## Mock-Ups
 Figma: https://www.figma.com/proto/8WCyQR5etzP2usuD90qgPq/Untitled?node-id=83-214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=83%3A214
 ![image](https://user-images.githubusercontent.com/90817505/235760666-797a677e-ccb1-42c4-a39e-a4ae11ce68c3.png)
 ![image](https://user-images.githubusercontent.com/90817505/235760686-2bc2b7f0-b354-4037-ac5b-84ee92123bd8.png)
