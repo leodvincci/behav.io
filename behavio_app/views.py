@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -12,7 +12,8 @@ def registration(request):
     last_name = request.data["last_name"]
     email = request.data["email"]
     password = request.data["password"]
-    app_user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, password=password, username=email)
+    app_user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, password=password,
+                                        username=email)
     app_user.save()
     print(app_user)
     res = {"042": f"User:{email} Registration Was A Success!"}
@@ -20,12 +21,13 @@ def registration(request):
 
 
 @api_view(["POST"])
-def login(request):
+def user_login(request):
     username = request.data["username"]
     password = request.data["password"]
     user = authenticate(username=username, password=password)
     if user is not None:
-        print(username,password)
+        login(request, user)
+        print(username, password)
         print("User Authorized: ", user)
         return JsonResponse({"user": username})
     else:
@@ -33,5 +35,6 @@ def login(request):
 
 
 @api_view(["GET"])
-def logout(request):
-    return None
+def user_logout(request):
+    logout(request)
+    return JsonResponse({"042": "Logout Success"})
