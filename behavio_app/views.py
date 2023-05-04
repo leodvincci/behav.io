@@ -47,6 +47,6 @@ def question(request):
 
 @api_view(["GET"])
 def category(request):
-    categories = Category.objects.all()
+    categories = list(Category.objects.all().values())
     print(categories)
-    return JsonResponse({"": ""})
+    return JsonResponse({"categories": categories})
