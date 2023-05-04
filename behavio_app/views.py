@@ -40,10 +40,11 @@ def user_logout(request):
     logout(request)
     return JsonResponse({"042": "Logout Success"})
 
-
+@api_view(["GET"])
 def question(request):
-    return None
-
+    questions = list(Question.objects.all().values())
+    print(questions)
+    return JsonResponse({"questions": questions})
 
 @api_view(["GET"])
 def category(request):
