@@ -38,3 +38,11 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return JsonResponse({"042": "Logout Success"})
+
+
+def question():
+    return None
+
+
+def category():
+    return None
