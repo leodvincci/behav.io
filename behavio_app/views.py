@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from .models import *
 
 
 # Create your views here.
@@ -38,3 +39,15 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return JsonResponse({"042": "Logout Success"})
+
+@api_view(["GET"])
+def question(request):
+    questions = list(Question.objects.all().values())
+    print(questions)
+    return JsonResponse({"questions": questions})
+
+@api_view(["GET"])
+def category(request):
+    categories = list(Category.objects.all().values())
+    print(categories)
+    return JsonResponse({"categories": categories})
