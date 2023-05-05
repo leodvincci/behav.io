@@ -1,5 +1,7 @@
 /.idea
 /venv
+/.venv
+.venv
 behavio/__pycache__/
 behavio_app/__pycache__/
 behavio_app/migrations/__pycache__/
