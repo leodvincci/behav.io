@@ -35,7 +35,7 @@ def user_login(request):
         return HttpResponse("<h1>Unauthorized User</h1>")
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 def user_logout(request):
     logout(request)
     return JsonResponse({"042": "Logout Success"})
