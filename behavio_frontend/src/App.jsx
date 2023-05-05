@@ -1,6 +1,6 @@
 const App = () => {
   return (
-    <div className="text-red-500">
+    <div className="bg-primary h-screen text-accent">
       Behavio
     </div>
   )
