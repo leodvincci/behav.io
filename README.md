@@ -43,6 +43,7 @@ Figma: https://www.figma.com/proto/8WCyQR5etzP2usuD90qgPq/Untitled?node-id=83-21
 ## Authors
 
 - [@leodvincci](https://www.github.com/leodvincci)
+- [@mdubelbeis](https://github.com/mdubelbeis)
 
 
 ## Deployment
