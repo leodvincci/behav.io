@@ -1,10 +1,10 @@
 import { useEffect } from "react"
-import { redirect } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const App = () => {
-
+  const navigate = useNavigate()
   useEffect(() => {
-    redirect('/login')
+    navigate('/login')
   }, [])
   return (
     <div className="bg-primary h-screen text-accent">
