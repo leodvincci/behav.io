@@ -4,11 +4,17 @@ export default {
     "./index.html",
     "./src/**/*.{js,jsx}",
   ],
+  plugins: [
+    require("daisyui"),
+  ],
   theme: {
     extend: {
+      fontFamily: {
+        primary: ["Jost", "sans-serif"],
+      },
       colors: {
         primary: {
-          DEFAULT: "#1E1E1E",
+          DEFAULT: "#181818",
           light: "#2E2E2E",
           dark: "#0E0E0E",
         },
@@ -40,5 +46,4 @@ export default {
       },
     },
   },
-  plugins: [],
 }
