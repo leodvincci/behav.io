@@ -3,13 +3,14 @@ import InterviewImage from '../components/ui/InterviewImage'
 import Logo from '../components/ui/Logo'
 import { redirect } from 'react-router-dom'
 
-const LoginPage = () => {
+
+const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     setIsError(false)
