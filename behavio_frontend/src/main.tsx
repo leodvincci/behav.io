@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import LoginPage from './routes/LoginPage.jsx';
-import RegistrationPage from './routes/RegistrationPage.jsx';
-import CategoriesPage from './routes/CategoriesPage.jsx';
-import NotFound from './components/NotFound.jsx';
+import App from './App'
+import LoginPage from './routes/LoginPage';
+import RegistrationPage from './routes/RegistrationPage';
+import CategoriesPage from './routes/CategoriesPage';
+import NotFound from './components/NotFound';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
 ]);
 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment).render(
   <React.StrictMode>
     <RouterProvider router={router}/>
   </React.StrictMode>

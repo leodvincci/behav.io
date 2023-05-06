@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   plugins: [
     require("daisyui"),
