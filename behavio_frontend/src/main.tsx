@@ -10,36 +10,40 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css'
+import DashboardPage from './routes/DashboardPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
     errorElement: <NotFound />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/registration",
+        element: <RegistrationPage />,
+      },
+      {
+        path: "/dashboard",
+        element: <DashboardPage />,
+      },
+      {
+        path: "/categories",
+        element: <CategoriesPage />,
+      },
+
+      {
+        path: "*",
+        element: <NotFound />,
+      }, 
+    ],
   },
-  {
-    path: "login",
-    element: <LoginPage />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "registration",
-    element: <RegistrationPage />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "categories",
-    element: <CategoriesPage />,
-    errorElement: <NotFound />,
-    
-    //* Use a loader to get data from the server: 
-    // loader: async () =>  {
-    //   const data = await fetch('http://127.0.0.1:8000/api/v1/categories')
-    //   console.log(data)
-    //   return await data.message.json()
-    // },   
-  },
-  
 ]);
 
 

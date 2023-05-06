@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import InterviewImage from '../components/ui/InterviewImage'
 import Logo from '../components/ui/Logo'
-import { Link, redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
 
 
 const LoginPage: React.FC = () => {
@@ -9,6 +11,7 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Basic validation to remove error message when user starts typing
@@ -47,7 +50,9 @@ const LoginPage: React.FC = () => {
       const data = await response.json()
       console.log(data)
       if (!data.error) {
-        redirect('/dashboard')
+        // Set token in local storage
+        localStorage.setItem('isAuthenticated', 'true')
+        navigate('/dashboard')
       } else {
         setIsError(true)
         setErrorMessage(data.error)

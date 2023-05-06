@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import InterviewImage from "../components/ui/InterviewImage"
 import Logo from "../components/ui/Logo"
-import { Link, redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 import RegistrationImage from "../components/ui/RegistrationImage"
+import { useNavigate } from "react-router-dom"
 
 const RegistrationPage: React.FC = () => {
   const [first_name, setFirstName] = useState('')
@@ -11,6 +12,7 @@ const RegistrationPage: React.FC = () => {
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Basic validation to remove error message when user starts typing
@@ -51,7 +53,7 @@ const RegistrationPage: React.FC = () => {
       const data = await response.json()
       console.log(data)
       if (data['042']) {
-        return redirect('/login')
+        navigate('/login')
       } else {
         console.log('error')
         setIsError(true)
