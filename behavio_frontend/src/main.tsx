@@ -4,7 +4,7 @@ import App from './App'
 import LoginPage from './routes/LoginPage';
 import RegistrationPage from './routes/RegistrationPage';
 import CategoriesPage from './routes/CategoriesPage';
-import NotFound from './components/NotFound';
+import NotFound from './routes/NotFoundPage';
 import {
   createBrowserRouter,
   RouterProvider,

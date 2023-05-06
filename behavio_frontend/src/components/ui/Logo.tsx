@@ -1,6 +1,11 @@
-const Logo = (props) => {
+interface LogoProps {
+  width: number;
+}
+
+
+const Logo: React.FC<LogoProps> = ({width}) => {
   return (
-    <svg width={props.width} viewBox="0 0 586 185" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <svg width={width} viewBox="0 0 586 185" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <g filter="url(#filter0_d_83_397)">
       <rect x="4" width="578" height="177" fill="url(#pattern0)" shapeRendering="crispEdges"/>
       </g>
