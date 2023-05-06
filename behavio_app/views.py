@@ -48,9 +48,16 @@ def user_logout(request):
 
 @api_view(["GET"])
 def question(request):
-    questions = list(Question.objects.all().values())
-    print(questions)
-    return JsonResponse({"questions": questions})
+    param = request.GET.get('catid')
+    if param is None:
+        questions = list(Question.objects.all().values())
+        print(questions)
+        return JsonResponse({"questions": questions})
+    else:
+        questions = list(Question.objects.filter(Category_id = param).values())
+        print(questions)
+        return JsonResponse({"questions": questions})
+
 
 
 @api_view(["GET"])
