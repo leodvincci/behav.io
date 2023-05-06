@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css'
+import DashboardPage from './routes/DashboardPage';
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,14 @@ const router = createBrowserRouter([
         element: <RegistrationPage />,
       },
       {
+        path: "/dashboard",
+        element: <DashboardPage />,
+      },
+      {
         path: "/categories",
         element: <CategoriesPage />,
       },
+
       {
         path: "*",
         element: <NotFound />,
