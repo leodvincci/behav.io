@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import InterviewImage from "../components/ui/InterviewImage"
 import Logo from "../components/ui/Logo"
 import { Link, redirect } from "react-router-dom"
+import RegistrationImage from "../components/ui/RegistrationImage"
 
 const RegistrationPage: React.FC = () => {
   const [first_name, setFirstName] = useState('')
@@ -67,7 +68,7 @@ const RegistrationPage: React.FC = () => {
     <section className="min-h-screen min-w-full grid grid-cols-1 lg:grid-cols-2 place-content-center place-items-center tracking-wide text-black">
       <div className='hidden lg:h-screen lg:w-full bg-primary lg:flex lg:flex-col lg:justify-center lg:items-center gap-10'>
         <Logo width={500} />
-        <InterviewImage />
+        <RegistrationImage width={500} />
       </div>
       <div className='bg-accent h-screen w-full flex-col flex items-center justify-center gap-20'>
         <h1 className='text-4xl text-primary font-bold'>REGISTRATION</h1>
