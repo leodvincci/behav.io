@@ -91,7 +91,7 @@ const RegistrationPage: React.FC = () => {
           <button className='btn text-secondary w-3/12 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg'>Register</button>
         </form>
 
-        <p className='text-primary text-center'>Already have an account? <Link to='/login' className='text-primary-light hover:text-primary-dark underline ml-1 tracking-wider'>Login</Link></p>
+        <p className='text-primary text-center'>Already have an account? <Link to='/login' className='underline ml-1 tracking-wider text-offBlue hover:text-offBlue-dark active:text-blue-900'>Login</Link></p>
       </div>
     </section>
   )

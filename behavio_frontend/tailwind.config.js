@@ -28,6 +28,12 @@ export default {
           light: "#FFCA28",
           dark: "#FFB300",
         },
+        offBlue: {
+          DEFAULT: "#407BFF",
+          ultraLight: "#86ABFF",
+          light: "#6896FF",
+          dark: "#396FE5",
+        },
         error: {
           DEFAULT: "#F44336",
           light: "#EF5350",
