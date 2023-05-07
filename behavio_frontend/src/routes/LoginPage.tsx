@@ -49,13 +49,12 @@ const LoginPage: React.FC = () => {
 
       const data = await response.json()
       console.log(data)
-      if (!data.error) {
-        // Set token in local storage
+      if (data.success) {
         localStorage.setItem('isAuthenticated', 'true')
         navigate('/dashboard')
       } else {
         setIsError(true)
-        setErrorMessage(data.error)
+        setErrorMessage('Invalid credentials. Please click on register below to create an account')
       }
     } catch (error) {
       setIsError(true)
