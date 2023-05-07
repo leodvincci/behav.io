@@ -15,28 +15,28 @@ const ProfileSettingsPage: React.FC = () => {
             <div className="flex flex-col lg:flex-row gap-10 w-full">
               <div className="w-full flex flex-col gap-5">
                 <div className="form-control w-full">
-                  <label htmlFor="first-name" className="label">
+                  <label htmlFor="firstName" className="label">
                     <span>First Name</span>
                   </label>
-                  <input type="text" name="first-name" placeholder="Enter your first name" className="input input-bordered w-full bg-secondary" />
+                  <input type="text" name="firstName" placeholder="Enter your first name" className="input input-bordered w-full bg-secondary" />
                 </div>
                 <div className="form-control w-full ">
-                  <label htmlFor="last-name" className="label">
+                  <label htmlFor="lastName" className="label">
                     <span>Last Name</span>
                   </label>
-                  <input type="text" name="last-name" placeholder="Enter your last name" className="input input-bordered w-full bg-secondary" />
+                  <input type="text" name="lastName" placeholder="Enter your last name" className="input input-bordered w-full bg-secondary" />
                 </div>
                 <div className="form-control w-full ">
-                  <label htmlFor="job-title" className="label">
+                  <label htmlFor="jobTitle" className="label">
                     <span>Job Title</span>
                   </label>
-                  <input type="text" name="job-title" placeholder="Enter your job title" className="input input-bordered w-full bg-secondary" />
+                  <input type="text" name="jobTitle" placeholder="Enter your job title" className="input input-bordered w-full bg-secondary" />
                 </div>
                 <div className="form-control w-full">
-                  <label htmlFor="avatar-url" className="label">
+                  <label htmlFor="avatarURL" className="label">
                     <span>Avatar URL</span>
                   </label>
-                  <input name="avatar-url" type="textarea" placeholder="Enter your avatar url" className="input input-bordered w-full bg-secondary" />
+                  <input name="avatarURL" type="textarea" placeholder="Enter your avatar url" className="input input-bordered w-full bg-secondary" />
                 </div>
               </div>
               <div className="w-full flex flex-col gap-5">
