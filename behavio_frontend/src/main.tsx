@@ -11,6 +11,9 @@ import {
 } from "react-router-dom";
 import './index.css'
 import DashboardPage from './routes/DashboardPage';
+import LogoutPage from './routes/LogoutPage';
+import ProfileSettingsPage from './routes/ProfileSettingsPage';
+import QuestionsPage from './routes/QuestionsPage';
 
 const router = createBrowserRouter([
   {
@@ -34,8 +37,24 @@ const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
+        path: "/questions",
+        element: <QuestionsPage />,
+      },
+      {
         path: "/categories",
         element: <CategoriesPage />,
+      },
+      {
+        path: "/categories/:category_id",
+        element: <CategoriesPage />,
+      },
+      {
+        path: "/logout",
+        element: <LogoutPage />,
+      },
+      {
+        path: "/profile-settings",
+        element: <ProfileSettingsPage />,
       },
 
       {

@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const NotFound = () => {
   return (
-    <main className="h-screen w-screen bg-secondary-light flex flex-col gap-6 items-center text-center justify-center">
-      <svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <main className="h-screen w-screen bg-accent flex flex-col gap-6 items-center text-center justify-center">
+      <svg width="400" height="400" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M500 382.4H0V382.65H500V382.4Z" fill="#EBEBEB"/>
         <path d="M449.9 391.92H359V392.17H449.9V391.92Z" fill="#EBEBEB"/>
         <path d="M331.22 389.21H306.33V389.46H331.22V389.21Z" fill="#EBEBEB"/>
@@ -146,7 +146,7 @@ const NotFound = () => {
         <path d="M193.691 417C193.498 416.979 193.316 416.903 193.166 416.781C193.016 416.659 192.904 416.496 192.845 416.312C192.786 416.128 192.781 415.93 192.832 415.744C192.882 415.557 192.986 415.389 193.131 415.26C211.361 402.07 221.771 383.77 221.871 383.59C221.908 383.441 221.98 383.303 222.08 383.186C222.18 383.069 222.306 382.977 222.447 382.917C222.588 382.857 222.742 382.83 222.895 382.838C223.049 382.847 223.198 382.891 223.332 382.966C223.466 383.042 223.58 383.147 223.667 383.274C223.753 383.402 223.809 383.547 223.83 383.699C223.851 383.851 223.837 384.006 223.789 384.152C223.74 384.298 223.659 384.431 223.551 384.54C223.451 384.72 212.831 403.39 194.261 416.82C194.093 416.937 193.894 416.999 193.691 417Z" fill="black"/>
         </g>
       </svg>
-      <p className="text-xl">Page not found</p>
+      <p className="text-xl text-primary-light">Page not found</p>
       <div>
         <Link to="/" className='btn text-secondary mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg'>Go back home</Link>
       </div>

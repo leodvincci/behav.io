@@ -82,7 +82,7 @@ const LoginPage: React.FC = () => {
           {isError ? <p className='text-error font-bold text-center'>{errorMessage}</p> : <p className="h-6"></p>}
           <button className='btn text-secondary w-3/12 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg'>Login</button>
         </form>
-        <p className='text-primary text-center'>Need an account? <Link to='/registration' className='text-primary-light hover:text-primary-dark underline tracking-wider ml-1'>Register</Link></p>
+        <p className='text-primary text-center'>Need an account? <Link to='/registration' className='text-offBlue hover:text-offBlue-dark active:text-blue-900 underline tracking-wider ml-1'>Register</Link></p>
       </div>
     </section>
   )
