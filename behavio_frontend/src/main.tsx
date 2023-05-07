@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 import './index.css'
 import DashboardPage from './routes/DashboardPage';
+import LogoutPage from './routes/LogoutPage';
+import ProfileSettingsPage from './routes/ProfileSettingsPage';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
       {
         path: "/categories",
         element: <CategoriesPage />,
+      },
+      {
+        path: "/logout",
+        element: <LogoutPage />,
+      },
+      {
+        path: "/profile-settings",
+        element: <ProfileSettingsPage />,
       },
 
       {
