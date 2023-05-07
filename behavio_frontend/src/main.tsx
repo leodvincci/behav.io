@@ -43,10 +43,22 @@ const router = createBrowserRouter([
       {
         path: "/categories",
         element: <CategoriesPage />,
-      },
-      {
-        path: "/categories/:category_id",
-        element: <CategoriesPage />,
+        // loader: async () => {
+        //   const response = await fetch('http://127.0.0.1:8000/api/v1/categories')
+        //   const data = await response.json()
+        //   return data
+        // },
+        // children: [
+        //   {
+        //     path: "/:category_id",
+        //     element: <CategoriesPage />,
+        //     loader: async ({ params }) => {
+        //       const response = await fetch(`http://127.0.0.1:8000/api/v1/categories/${params.category_id}`)
+        //       const data = await response.json()
+        //       return data
+        //     },
+        //   },
+        // ],
       },
       {
         path: "/logout",
