@@ -23,8 +23,7 @@ def registration(request):
     )
     app_user.save()
     print(app_user)
-    res = {"042": f"User:{email} Registration Was A Success!"}
-    return JsonResponse(res)
+    return JsonResponse({'success': True})
 
 
 @api_view(["POST"])
@@ -36,15 +35,15 @@ def user_login(request):
         login(request, user)
         print(username, password)
         print("User Authorized: ", user)
-        return JsonResponse({"user": username})
+        return JsonResponse({'success': True})
     else:
-        return JsonResponse({"error": "User Not Authorized"})
+        return JsonResponse({'success': False})
 
 
 @api_view(["POST"])
 def user_logout(request):
     logout(request)
-    return JsonResponse({"042": "Logout Success"})
+    return JsonResponse({'success': True})
 
 
 @api_view(["GET"])
