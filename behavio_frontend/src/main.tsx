@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import LoginPage from './routes/LoginPage';
 import RegistrationPage from './routes/RegistrationPage';
+import ResponsePage from './routes/ResponsePage';
 import CategoriesPage from './routes/CategoriesPage';
 import NotFound from './routes/NotFoundPage';
 import {
@@ -52,12 +53,19 @@ const router = createBrowserRouter([
             path: ":catid",
             element: <QuestionPage />,
             loader: async ({params}) => {
-              const { question_id } = params
-              const response = await fetch(`http://localhost:8000/api/v1/questions/`)
-              const data = await response.json()
-              console.log(data)
+              console.log(params)
+
+              try {
+                const response = await fetch(`http://localhost:8000/api/v1/questions/${params.catid}`)
+                const data = await response.json()
+                console.log(data)
+                return {
+                  data: data,
+                }
+              } catch (error) {
+                console.log(error)
+              }
     
-              return data
             },
           },
         ],
@@ -69,15 +77,10 @@ const router = createBrowserRouter([
           console.log(params)
           const response = await fetch('http://localhost:8000/api/v1/categories')
           const data = await response.json()
-          console.log(data)
 
           return data
         },
         children: [
-          {
-            path: ":category_id",
-            element: <CategoryPage />,
-          },
           {
             path: "*",
             element: <NotFound />,
@@ -92,7 +95,10 @@ const router = createBrowserRouter([
         path: "/profile-settings",
         element: <ProfileSettingsPage />,
       },
-
+      {
+        path: "/response",
+        element: <ResponsePage />,
+      },
       {
         path: "*",
         element: <NotFound />,

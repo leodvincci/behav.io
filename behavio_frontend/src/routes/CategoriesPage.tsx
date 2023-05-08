@@ -2,6 +2,8 @@ import { useLoaderData } from "react-router"
 import Header from "../components/ui/Header"
 import SettingsImage from "../components/ui/SettingsImage"
 import { Link } from "react-router-dom"
+
+
 const CategoriesPage = () => {
   const data = useLoaderData() // Loads the  data from the loader in main.jsx
   return (
