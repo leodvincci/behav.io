@@ -12,6 +12,7 @@ class Category(models.Model):
 class Question(models.Model):
     question_text   = models.TextField()
     Category        = models.ForeignKey(Category, on_delete=models.CASCADE)
+    isFavorite      = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.category} | {self.question_text}"
