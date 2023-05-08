@@ -9,8 +9,8 @@ const CategoriesPage = () => {
       <Header/>
       <main className="min-h-fit py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
         <section>
-          <div className="flex flex-col justify-center items-center md:flex-row gap-10 md:gap-20 my-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl text-offBlue">Categories</h1>
+          <div className="flex flex-col justify-center items-center md:flex-row gap-20 md:gap-20 my-10">
+            <h1 className="text-5xl lg:text-6xl text-offBlue">Categories</h1>
             <SettingsImage width={250} />
           </div>
         </section>
