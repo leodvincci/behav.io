@@ -20,7 +20,7 @@ const CategoriesPage = () => {
               return (
                 <div key={category.id} className="p-10 bg-primary-light text-secondary-dark uppercase rounded-xl bg-opacity-90 flex flex-col justify-center items-center gap-10 tracking-wider">
                   <h3 className="card-title">{category.category_txt}</h3>
-                  <Link to={`/questions`} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">View</Link>
+                  <Link to={`/questions/${category.id}`} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">View</Link>
                 </div>
               )
             })
