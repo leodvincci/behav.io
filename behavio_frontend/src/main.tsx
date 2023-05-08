@@ -41,13 +41,19 @@ const router = createBrowserRouter([
       {
         path: "/questions",
         element: <QuestionsPage />,
+        loader: async () => {
+          const response = await fetch('http://localhost:8000/api/v1/questions')
+          const data = await response.json()
+          console.log(`Questions: ${data}`)
+          return data
+        },
         children: [
           {
-            path: ":question_id",
+            path: ":catid",
             element: <QuestionPage />,
             loader: async ({params}) => {
               const { question_id } = params
-              const response = await fetch(`http://localhost:8000/api/v1/questions/${question_id}`)
+              const response = await fetch(`http://localhost:8000/api/v1/questions/`)
               const data = await response.json()
               console.log(data)
     
@@ -60,6 +66,7 @@ const router = createBrowserRouter([
         path: "/categories",
         element: <CategoriesPage />,
         loader: async ({params}) => {
+          console.log(params)
           const response = await fetch('http://localhost:8000/api/v1/categories')
           const data = await response.json()
           console.log(data)

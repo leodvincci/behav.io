@@ -9,8 +9,8 @@ const CategoriesPage = () => {
       <Header/>
       <main className="min-h-fit py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
         <section>
-          <div className="flex flex-col justify-center items-center md:flex-row gap-10 md:gap-20 my-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl text-offBlue">Categories</h1>
+          <div className="flex flex-col justify-center items-center md:flex-row gap-20 md:gap-20 my-10">
+            <h1 className="text-5xl lg:text-6xl text-offBlue">Categories</h1>
             <SettingsImage width={250} />
           </div>
         </section>
@@ -20,7 +20,7 @@ const CategoriesPage = () => {
               return (
                 <div key={category.id} className="p-10 bg-primary-light text-secondary-dark uppercase rounded-xl bg-opacity-90 flex flex-col justify-center items-center gap-10 tracking-wider">
                   <h3 className="card-title">{category.category_txt}</h3>
-                  <Link to={`/questions/${category.id}`} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">View</Link>
+                  <Link to={`/questions`} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">View</Link>
                 </div>
               )
             })
