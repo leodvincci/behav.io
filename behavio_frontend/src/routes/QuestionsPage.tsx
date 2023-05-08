@@ -7,11 +7,12 @@ import { useState } from "react"
 import QuestionsImage from "../components/ui/QuestionsImage"
 
 const QuestionsPage = () => {
-  const [isFavorite, setIsFavorite] = useState(false)
   const data = useLoaderData() // Loads the  data from the loader in main.jsx
-  console.log(data)
+  const {id, question_text, category_id, is_favorite} = data.questions
+  const [isFavorite, setIsFavorite] = useState(is_favorite)
 
   const handleFavoriteQuestion = () => {
+    // TODO: Add logic to favorite a question
     setIsFavorite(!isFavorite)
   }
 
@@ -32,9 +33,11 @@ const QuestionsPage = () => {
                 <div key={question.id} className="p-10 bg-primary-light text-secondary-dark uppercase rounded-xl bg-opacity-90 flex flex-col justify-between items-center gap-10 tracking-widest">
                   <h3 className="card-title">{question.question_text}</h3>
                   <div className="flex gap-3">
-                    <Link to={`/questions/${question.id}`} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Answer</Link>
+                    {/* When pressed, the answer button will link to /response also passing the question object - This option or state management. */}
+                    <Link to={`/response`}  className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Answer</Link>
                     <aside onClick={handleFavoriteQuestion} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">
-                      {!isFavorite ? <BsHeart /> : <BsHeartFill />}
+                      {/* // TODO Add logic to show filled heart if question is favorited NEED POST REQ TO UPDATE IS_FAVORITE */}
+                      {question.isFavorite ? <BsHeartFill /> : <BsHeart />} 
                     </aside>
                   </div>
                 </div>
