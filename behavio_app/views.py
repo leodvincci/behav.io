@@ -23,7 +23,7 @@ def registration(request):
     )
     app_user.save()
     print(app_user)
-    return JsonResponse({'success': True})
+    return JsonResponse({"success": True})
 
 
 @api_view(["POST"])
@@ -35,26 +35,26 @@ def user_login(request):
         login(request, user)
         print(username, password)
         print("User Authorized: ", user)
-        return JsonResponse({'success': True})
+        return JsonResponse({"success": True})
     else:
-        return JsonResponse({'success': False})
+        return JsonResponse({"success": False})
 
 
 @api_view(["POST"])
 def user_logout(request):
     logout(request)
-    return JsonResponse({'success': True})
+    return JsonResponse({"success": True})
 
 
 @api_view(["GET"])
 def question(request):
-    param = request.GET.get('catid')
+    param = request.GET.get("catid")
     if param is None:
         questions = list(Question.objects.all().values())
         print(questions)
         return JsonResponse({"questions": questions})
     else:
-        questions = list(Question.objects.filter(Category_id = param).values())
+        questions = list(Question.objects.filter(Category_id=param).values())
         print(questions)
         return JsonResponse({"questions": questions})
 
@@ -66,7 +66,7 @@ def category(request):
     return JsonResponse({"categories": categories})
 
 
-@api_view(["POST","PUT","GET","DELETE"])
+@api_view(["POST", "PUT", "GET", "DELETE"])
 def response_handling(request, question_id, response_id=None):
     if request.method == "POST":
         try:
@@ -74,61 +74,69 @@ def response_handling(request, question_id, response_id=None):
             response_T = request.data["response_T"]
             response_A = request.data["response_A"]
             response_R = request.data["response_R"]
-            vid_link   = request.data["vid_link"]
-            isPrivate  = request.data["isPrivate"]
-            
+            vid_link = request.data["vid_link"]
+            isPrivate = request.data["isPrivate"]
+
             new_response = Response.objects.create(
-                app_user   = request.app_user,
-                Question   = question_id,
-                response_S = response_S,
-                response_T = response_T,
-                response_A = response_A,
-                response_R = response_R,
-                vid_link   = vid_link,
-                isPrivate  = isPrivate,
+                app_user=request.app_user,
+                Question=question_id,
+                response_S=response_S,
+                response_T=response_T,
+                response_A=response_A,
+                response_R=response_R,
+                vid_link=vid_link,
+                isPrivate=isPrivate,
             )
-            
+
             new_response.save()
-            return JsonResponse({'success': True})
-        
+            return JsonResponse({"success": True})
+
         except Exception as e:
             print(f"Error: {e}")
-            return JsonResponse({'success': False})
-            
-    '''Takes data from request, iterates through each key/value and updates response by id, saves response'''
+            return JsonResponse({"success": False})
+
+    """Takes data from request, iterates through each key/value and updates response by id, saves response"""
     if request.method == "PUT":
         try:
             if response_id:
-                response = get_object_or_404(Response, id=response_id, app_user=request.app_user)
+                response = get_object_or_404(
+                    Response, id=response_id, app_user=request.app_user
+                )
                 data = request.data
                 for key, value in data.items():
                     setattr(response, key, value)
                 response.save()
-                return JsonResponse({'success': True})
+                return JsonResponse({"success": True})
         except Exception as e:
             print(f"Error: {e}")
-            return JsonResponse({'success': False})
-    
+            return JsonResponse({"success": False})
+
     if request.method == "GET":
         # GET single response
         if response_id:
-            response = get_object_or_404(Response, id=response_id, app_user=request.app_user)
+            response = get_object_or_404(
+                Response, id=response_id, app_user=request.app_user
+            )
             response_dict = model_to_dict(response)
             return JsonResponse({"response": response_dict})
         # GET all of a user's responses
         else:
             try:
-                responses = list(Response.objects.filter(app_user=request.app_user).values())
-                return JsonResponse({'responses': responses})
+                responses = list(
+                    Response.objects.filter(app_user=request.app_user).values()
+                )
+                return JsonResponse({"responses": responses})
             except Exception as e:
                 print(f"Error: {e}")
-                return JsonResponse({'responses': []})
-    
+                return JsonResponse({"responses": []})
+
     if request.method == "DELETE":
         try:
-            response = get_object_or_404(Response, id=response_id, app_user=request.app_user)
+            response = get_object_or_404(
+                Response, id=response_id, app_user=request.app_user
+            )
             response.delete()
-            return JsonResponse({'success': True})
+            return JsonResponse({"success": True})
         except Exception as e:
             print(f"Error: {e}")
-            return JsonResponse({'success': False})
+            return JsonResponse({"success": False})

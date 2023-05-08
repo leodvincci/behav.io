@@ -14,9 +14,9 @@ import './index.css'
 import DashboardPage from './routes/DashboardPage';
 import LogoutPage from './routes/LogoutPage';
 import ProfileSettingsPage from './routes/ProfileSettingsPage';
+import FilteredQuestionPage from './routes/FilteredQuestionPage';
 import QuestionsPage from './routes/QuestionsPage';
 import CategoryPage from './routes/CategoryPage';
-import QuestionPage from './QuestionPage';
 
 const router = createBrowserRouter([
   {
@@ -44,29 +44,16 @@ const router = createBrowserRouter([
         element: <QuestionsPage />,
         loader: async () => {
           const response = await fetch('http://localhost:8000/api/v1/questions')
-          const data = await response.json()
-          console.log(`Questions: ${data}`)
-          return data
+          return await response.json()
         },
         children: [
           {
             path: ":catid",
-            element: <QuestionPage />,
-            loader: async ({params}) => {
-              console.log(params)
-
-              try {
-                const response = await fetch(`http://localhost:8000/api/v1/questions/${params.catid}`)
-                const data = await response.json()
-                console.log(data)
-                return {
-                  data: data,
-                }
-              } catch (error) {
-                console.log(error)
-              }
-    
-            },
+            element: <FilteredQuestionPage />,
+            // loader: async ({params}) => {
+            //   const response = await fetch(`http://localhost:8000/api/v1/questions?catid=${params.catid}`)
+            //   return await response.json()
+            // },
           },
         ],
       },
@@ -77,7 +64,6 @@ const router = createBrowserRouter([
           console.log(params)
           const response = await fetch('http://localhost:8000/api/v1/categories')
           const data = await response.json()
-
           return data
         },
         children: [
@@ -99,10 +85,6 @@ const router = createBrowserRouter([
         path: "/response",
         element: <ResponsePage />,
       },
-      {
-        path: "*",
-        element: <NotFound />,
-      }, 
     ],
   },
 ]);
