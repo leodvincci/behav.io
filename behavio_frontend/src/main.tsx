@@ -50,15 +50,22 @@ const router = createBrowserRouter([
         },
         children: [
           {
-            path: ":category_id",
+            path: ":catid",
             element: <QuestionPage />,
             loader: async ({params}) => {
               console.log(params)
-              const response = await fetch(`http://localhost:8000/api/v1/questions/${params.category_id}`)
-              const data = await response.json()
-              console.log(data)
+
+              try {
+                const response = await fetch(`http://localhost:8000/api/v1/questions/${params.catid}`)
+                const data = await response.json()
+                console.log(data)
+                return {
+                  data: data,
+                }
+              } catch (error) {
+                console.log(error)
+              }
     
-              return data
             },
           },
         ],
@@ -70,15 +77,10 @@ const router = createBrowserRouter([
           console.log(params)
           const response = await fetch('http://localhost:8000/api/v1/categories')
           const data = await response.json()
-          console.log(data)
 
           return data
         },
         children: [
-          {
-            path: ":category_id",
-            element: <CategoryPage />,
-          },
           {
             path: "*",
             element: <NotFound />,
