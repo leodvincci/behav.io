@@ -14,6 +14,7 @@ import DashboardPage from './routes/DashboardPage';
 import LogoutPage from './routes/LogoutPage';
 import ProfileSettingsPage from './routes/ProfileSettingsPage';
 import QuestionsPage from './routes/QuestionsPage';
+import CategoryPage from './routes/CategoryPage';
 
 const router = createBrowserRouter([
   {
@@ -43,22 +44,23 @@ const router = createBrowserRouter([
       {
         path: "/categories",
         element: <CategoriesPage />,
-        // loader: async () => {
-        //   const response = await fetch('http://127.0.0.1:8000/api/v1/categories')
-        //   const data = await response.json()
-        //   return data
-        // },
-        // children: [
-        //   {
-        //     path: "/:category_id",
-        //     element: <CategoriesPage />,
-        //     loader: async ({ params }) => {
-        //       const response = await fetch(`http://127.0.0.1:8000/api/v1/categories/${params.category_id}`)
-        //       const data = await response.json()
-        //       return data
-        //     },
-        //   },
-        // ],
+        loader: async ({params}) => {
+          const response = await fetch('http://localhost:8000/api/v1/categories')
+          const data = await response.json()
+          console.log(data)
+
+          return data
+        },
+        children: [
+          {
+            path: ":category_id",
+            element: <CategoryPage />,
+          },
+          {
+            path: "*",
+            element: <NotFound />,
+          }
+        ],
       },
       {
         path: "/logout",
