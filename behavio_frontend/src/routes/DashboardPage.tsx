@@ -17,6 +17,7 @@ const DashboardPage = () => {
           <Link className="btn text-secondary w-full mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg" to={'/questions'}>Interview Questions</Link>
           <Link className="btn text-secondary w-full mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg" to={'#'}>Random Interview Question</Link>
           <Link className="btn text-secondary w-full mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg" to={'#'}>Feedback</Link>
+          <Link className="btn text-secondary w-full mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg" to={'/categories'}>Categories</Link>
         </div>
       </main>
     </div>
