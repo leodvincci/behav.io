@@ -8,7 +8,11 @@ urlpatterns = [
     path("api/v1/logout", views.user_logout, name="user_logout"),
     path("api/v1/questions", views.question, name="questions"),
     path(
-        "api/v1/questions/<int:category_id>/",
+        "api/v1/questions/<int:question_id>/",
+        views.question,
+        name="questions_by_question_id",
+    ),    path(
+        "api/v1/questions/<str:category_txt>/",
         views.question,
         name="questions_by_category",
     ),
