@@ -47,16 +47,22 @@ def user_logout(request):
 
 
 @api_view(["GET"])
-def question(request):
-    param = request.GET.get('catid')
-    if param is None:
-        questions = list(Question.objects.all().values())
-        print(questions)
-        return JsonResponse({"questions": questions})
+def question(request, category_id=None):
+    if category_id:
+        try: 
+            questions = list(Question.objects.filter(Category=category_id).values())
+            return JsonResponse({'questions': questions})
+        except Exception as e:
+                print(f"Error: {e}")
+                return JsonResponse({'success': False})
+            
     else:
-        questions = list(Question.objects.filter(Category_id = param).values())
-        print(questions)
-        return JsonResponse({"questions": questions})
+        try:
+            questions = list(Question.objects.all().values())
+            return JsonResponse({"questions": questions})
+        except Exception as e:
+                print(f"Error: {e}")
+                return JsonResponse({'success': False})
 
 
 @api_view(["GET"])
@@ -78,14 +84,15 @@ def response_handling(request, question_id, response_id=None):
             isPrivate  = request.data["isPrivate"]
             
             new_response = Response.objects.create(
-                app_user   = request.app_user,
-                Question   = question_id,
-                response_S = response_S,
-                response_T = response_T,
-                response_A = response_A,
-                response_R = response_R,
-                vid_link   = vid_link,
-                isPrivate  = isPrivate,
+                app_user        = request.app_user,
+                Question        = question_id,
+                response_S      = response_S,
+                response_T      = response_T,
+                response_A      = response_A,
+                response_R      = response_R,
+                vid_link        = vid_link,
+                isPrivate       = isPrivate,
+                feedbackCounter = 0,
             )
             
             new_response.save()
@@ -129,6 +136,58 @@ def response_handling(request, question_id, response_id=None):
             response = get_object_or_404(Response, id=response_id, app_user=request.app_user)
             response.delete()
             return JsonResponse({'success': True})
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({'success': False})
+        
+        
+@api_view(["POST","GET","DELETE"])
+def feedback_handling(request, response_id, feedback_id=None):
+    if request.method == "POST":
+        try:
+            feedback_text = request.data["feedback_text"]
+            response = get_object_or_404(Response, id=response_id) 
+            
+            new_feedback = Feedback.objects.create(
+                Response = response_id,
+                feedback_text = feedback_text,
+            )
+            
+            new_feedback.save()
+            response.feedbackCounter += 1
+            response.save()
+            
+            return JsonResponse({'success': True})
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({'success': False})
+    
+    if request.method == "GET":
+        try: 
+            feedbacks = Feedback.objects.filter(Response=response_id)
+            feedback_list = []
+            
+            for feedback in feedbacks:
+                feedback_list.append(feedback.feedback_text)
+                
+            return JsonResponse({'feedback': feedback_list})
+            
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({'success': False})
+    
+    if request.method == "DELETE":
+        try:
+            feedback = get_object_or_404(Feedback, id=feedback_id)
+            response = get_object_or_404(Response, id=feedback.Response) 
+            
+            feedback.delete()
+            
+            response.feedbackCounter -= 1
+            response.save()
+            return JsonResponse({'success': True})
+        
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({'success': False})
