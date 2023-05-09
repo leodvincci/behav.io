@@ -11,6 +11,10 @@ urlpatterns = [
         "api/v1/questions/<int:category_id>/",
         views.question,
         name="questions_by_category",
+    ),    path(
+        "api/v1/questions/<str:category_txt>/",
+        views.question,
+        name="questions_by_category",
     ),
     path("api/v1/categories", views.category, name="categories"),
     path("api/v1/responses/", views.response_handling, name="get_user_responses"),
