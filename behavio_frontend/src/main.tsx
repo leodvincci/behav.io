@@ -15,8 +15,7 @@ import DashboardPage from './routes/DashboardPage';
 import LogoutPage from './routes/LogoutPage';
 import ProfileSettingsPage from './routes/ProfileSettingsPage';
 import QuestionsPage from './routes/QuestionsPage';
-import CategoryPage from './routes/CategoryPage';
-import QuestionPage from './QuestionPage';
+import QuestionPage from './routes/QuestionPage';
 
 const router = createBrowserRouter([
   {
@@ -44,31 +43,20 @@ const router = createBrowserRouter([
         element: <QuestionsPage />,
         loader: async () => {
           const response = await fetch('http://localhost:8000/api/v1/questions')
-          const data = await response.json()
-          console.log(`Questions: ${data}`)
-          return data
+          return await response.json()
+        }
+      },
+      {
+        path: "questions/:catid",
+        element: <QuestionPage />,
+        loader: async ({params}) => {
+          try {
+            const response = await fetch(`http://localhost:8000/api/v1/questions/${params.catid}`)
+            return await response.json()
+          } catch (error) {
+            console.log(error)
+          }
         },
-        children: [
-          {
-            path: ":catid",
-            element: <QuestionPage />,
-            loader: async ({params}) => {
-              console.log(params)
-
-              try {
-                const response = await fetch(`http://localhost:8000/api/v1/questions/${params.catid}`)
-                const data = await response.json()
-                console.log(data)
-                return {
-                  data: data,
-                }
-              } catch (error) {
-                console.log(error)
-              }
-    
-            },
-          },
-        ],
       },
       {
         path: "/categories",
@@ -76,11 +64,23 @@ const router = createBrowserRouter([
         loader: async ({params}) => {
           console.log(params)
           const response = await fetch('http://localhost:8000/api/v1/categories')
-          const data = await response.json()
-
-          return data
+          return await response.json()
         },
         children: [
+          {
+            path: ":catid",
+            element: <QuestionPage />,
+            loader: async ({params}) => {
+              try {
+                const response = await fetch(`http://localhost:8000/api/v1/categories/${params.catid}`)
+                const data = await response.json()
+                console.log(data)
+                return data
+              } catch (error) {
+                console.log(error)
+              }
+            },
+          },
           {
             path: "*",
             element: <NotFound />,
