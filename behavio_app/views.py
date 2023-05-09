@@ -87,7 +87,6 @@ def category(request):
 def response_handling(request, question_id, response_id=None):
     if request.method == "POST":
         try:
-            print(f"userid: {request.user}")
 
             response_S = request.data["response_S"]
             response_T = request.data["response_T"]
@@ -120,7 +119,7 @@ def response_handling(request, question_id, response_id=None):
         try:
             if response_id:
                 response = get_object_or_404(
-                    Response, id=response_id, app_user=request.app_user
+                    Response, id=response_id, app_user=request.user
                 )
                 data = request.data
                 for key, value in data.items():
@@ -135,7 +134,7 @@ def response_handling(request, question_id, response_id=None):
         # GET single response
         if response_id:
             response = get_object_or_404(
-                Response, id=response_id, app_user=request.app_user
+                Response, id=response_id, app_user=request.user
             )
             response_dict = model_to_dict(response)
             return JsonResponse({"response": response_dict})
@@ -143,7 +142,7 @@ def response_handling(request, question_id, response_id=None):
         else:
             try:
                 responses = list(
-                    Response.objects.filter(app_user=request.app_user).values()
+                    Response.objects.filter(app_user=request.user).values()
                 )
                 return JsonResponse({"responses": responses})
             except Exception as e:
@@ -153,7 +152,7 @@ def response_handling(request, question_id, response_id=None):
     if request.method == "DELETE":
         try:
             response = get_object_or_404(
-                Response, id=response_id, app_user=request.app_user
+                Response, id=response_id, app_user=request.user
             )
             response.delete()
             return JsonResponse({"success": True})
