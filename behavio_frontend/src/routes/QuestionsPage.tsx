@@ -22,7 +22,7 @@ const QuestionsPage = () => {
       <main className="min-h-fit py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
         <section>
           <div className="flex flex-col justify-center items-center md:flex-row gap-20 md:gap-20 my-10">
-            <h1 className="text-5xl md:text-5xl lg:text-6xl text-offBlue">Questions</h1>
+            <h1 className="text-5xl md:text-5xl lg:text-6xl text-offBlue">All Questions</h1>
             <QuestionsImage width={250} />
           </div>
         </section>
@@ -33,10 +33,8 @@ const QuestionsPage = () => {
                 <div key={question.id} className="p-10 bg-primary-light text-secondary-dark uppercase rounded-xl bg-opacity-90 flex flex-col justify-between items-center gap-10 tracking-widest">
                   <h3 className="card-title">{question.question_text}</h3>
                   <div className="flex gap-3">
-                    {/* When pressed, the answer button will link to /response also passing the question object - This option or state management. */}
-                    <Link to={`/response`}  className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Answer</Link>
+                    <Link to={`/response/${question.id}`}  className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Answer</Link>
                     <aside onClick={handleFavoriteQuestion} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">
-                      {/* // TODO Add logic to show filled heart if question is favorited NEED POST REQ TO UPDATE IS_FAVORITE */}
                       {question.isFavorite ? <BsHeartFill /> : <BsHeart />} 
                     </aside>
                   </div>
