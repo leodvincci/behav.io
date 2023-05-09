@@ -6,9 +6,9 @@ import { BsHeart, BsHeartFill } from 'react-icons/bs'
 import QuestionsImage from '../components/ui/QuestionsImage'
 
 const QuestionPage: React.FC = () => {
-  const data = useLoaderData()
-  const { id, question_text, category_id, is_favorite } = data.questions
-  const [isFavorite, setIsFavorite] = useState(is_favorite)
+  const data = useLoaderData() as any
+  // const { id, question_text, category_id, is_favorite } = data.questions
+  const [isFavorite, setIsFavorite] = useState(data.is_favorite)
 
   const handleFavoriteQuestion = () => {
     setIsFavorite(!isFavorite)
@@ -20,7 +20,7 @@ const QuestionPage: React.FC = () => {
     <main className="w-fit min-h-screen py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
       <section>
         <div className="flex flex-col justify-center items-center md:flex-row gap-20 md:gap-20 my-10">
-          <h1 className="text-5xl md:text-5xl lg:text-6xl text-offBlue">Questions</h1>
+          <h1 className="text-5xl lg:text-6xl text-offBlue">Questions</h1>
           <QuestionsImage width={250} />
         </div>
       </section>
