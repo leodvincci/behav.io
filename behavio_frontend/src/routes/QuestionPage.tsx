@@ -7,7 +7,7 @@ import QuestionsImage from '../components/ui/QuestionsImage'
 
 const QuestionPage: React.FC = () => {
   const data = useLoaderData() as any
-  // const { id, question_text, category_id, is_favorite } = data.questions
+  console.log(data)
   const [isFavorite, setIsFavorite] = useState(data.is_favorite)
 
   const handleFavoriteQuestion = () => {

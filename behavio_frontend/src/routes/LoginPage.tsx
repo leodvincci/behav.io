@@ -51,6 +51,7 @@ const LoginPage: React.FC = () => {
       console.log(data)
       if (data.success) {
         localStorage.setItem('isAuthenticated', 'true')
+        localStorage.setItem('user', JSON.stringify(data.user))
         navigate('/dashboard')
       } else {
         setIsError(true)

@@ -11,7 +11,8 @@ urlpatterns = [
         "api/v1/questions/<int:question_id>/",
         views.question,
         name="questions_by_question_id",
-    ),    path(
+    ),
+    path(
         "api/v1/questions/<str:category_txt>/",
         views.question,
         name="questions_by_category",

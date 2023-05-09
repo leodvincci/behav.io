@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Header from '../components/ui/Header'
 import SettingsImage from '../components/ui/SettingsImage'
 import { useLoaderData } from 'react-router-dom';
@@ -12,7 +13,8 @@ interface QuestionType {
 
 const ResponsePage: React.FC = () => {
   const questionData = useLoaderData() as any
-  const [questionText, setQuestionText] = useState<string>(questionData.questions[0].question_text)
+  console.log(questionData)
+  const [questionText, setQuestionText] = useState<string>(questionData.question.question_text)
   
 
   const [situation, setSituation] = useState<string>('')
@@ -22,9 +24,31 @@ const ResponsePage: React.FC = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false)
   const [youtubeLink, setYoutubeLink] = useState<string>('')
   
-  const [isFavorite, setIsFavorite] = useState<boolean>(questionData.is_favorite)
+  const [isFavorite, setIsFavorite] = useState<boolean>(false)
 
+  const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
+    e.preventDefault()
 
+    const response = {
+      response_S: situation,
+      response_T: task,
+      response_A: action,
+      response_R: results,
+      vid_link: youtubeLink,
+      isPrivate: isPrivate,
+    }
+
+    const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(response),
+    })
+
+    const data = await res.json()
+    console.log(data)
+}
 
 
   return (
@@ -35,13 +59,13 @@ const ResponsePage: React.FC = () => {
         <h1 className="text-5xl lg:text-6xl text-offBlue">Your Response</h1>
         <SettingsImage width={250} />
       </section>
-      <section className="w-full h-screen bg-accent max-w-6xl flex flex-col gap-10">
+      <section className="w-full h-screen bg-accent max-w-6xl flex flex-col gap-20">
         <div>
           <h2 className="text-3xl lg:text-4xl font-primary tracking-wide text-center text-black border-red-400">{questionText}</h2>
         </div>
         <div>
-          <form className="text-black flex items-center flex-col w-full max-w-lg lg:max-w-full mx-auto">
-            <div className="flex flex-col lg:flex-row gap-20 w-full">
+          <form className="text-black flex items-center flex-col w-full max-w-lg lg:max-w-full mx-auto gap-20" onSubmit={handleResponseSubmit}>
+            <div className="flex flex-col gap-20 lg:gap-10 lg:p-10 w-full">
               <div className="w-full flex flex-col gap-5">
                 <div className="form-control w-full">
                   <label htmlFor="situation" className="label">
@@ -68,7 +92,7 @@ const ResponsePage: React.FC = () => {
                   <textarea onChange={(e) => setResults(e.target.value)} name="action" placeholder="Enter the action you took" className="textarea input-bordered w-full bg-secondary" />
                 </div>
               </div>
-              <div className="w-full flex flex-col gap-5 p-8 lg:p-0 items-center justify-center">
+              <div className="w-full flex flex-col gap-5 p-8 items-center justify-center">
                 <div className="form-control w-full">
                   <label htmlFor="youtube-link" className="label">
                     <small>YouTube Video Link</small>
@@ -89,20 +113,19 @@ const ResponsePage: React.FC = () => {
                     {/* // NOT FOR BE */}
                     <small>Favorite this response?</small>
                   </label>
-                  <select name="isFavorite" className="select select-bordered w-full bg-secondary text-gray-400 font-normal font-primary" value={String(isFavorite)}  >
+                  <select name="isFavorite" className="select select-bordered w-full bg-secondary text-gray-400 font-normal font-primary" value={String(isFavorite)} onChange={(e) => setIsFavorite(e.target.value === 'true' ? true : false)} >
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
                 </div>
               </div>
             </div>
-            <div className="flex gap-3 mt-10">
+            <div className="flex gap-3">
               <button type='reset' className="btn text-secondary mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Reset</button>
-              <button className="btn text-secondary mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Send</button>
+              <button type='submit' className="btn text-secondary mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Send</button>
             </div>
           </form>
         </div>
-        {/* FORM FOR STAR METHOD INPUT */}
       </section>
     </main>
   </>
