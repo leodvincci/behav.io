@@ -47,10 +47,10 @@ def user_logout(request):
 
 
 @api_view(["GET"])
-def question(request, category_id=None, category_txt=None):
-    if category_id:
+def question(request, question_id=None, category_txt=None):
+    if question_id:
         try: 
-            questions = list(Question.objects.filter(Category=category_id).values())
+            questions = list(Question.objects.filter(id=question_id).values())
             return JsonResponse({'questions': questions})
         except Exception as e:
                 print(f"Error: {e}")
