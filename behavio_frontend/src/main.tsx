@@ -16,6 +16,7 @@ import LogoutPage from './routes/LogoutPage';
 import ProfileSettingsPage from './routes/ProfileSettingsPage';
 import QuestionsPage from './routes/QuestionsPage';
 import QuestionPage from './routes/QuestionPage';
+import ResponseMenu from './routes/ResponseMenu';
 
 const router = createBrowserRouter([
   {
@@ -97,7 +98,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/response",
-        element: <ResponsePage />,
+        errorElement: <NotFound />,
+        children: [
+          {
+            path: ":questionid",
+            element: <ResponsePage />,
+            loader: async ({params}) => {
+              try {
+                const response = await fetch(`http://localhost:8000/api/v1/questions/${params.questionid}`)
+                const data = await response.json()
+                console.log(data)
+                return data
+              } catch (error) {
+                console.log(error)
+              }
+            },
+          },
+        ],
       },
       {
         path: "*",

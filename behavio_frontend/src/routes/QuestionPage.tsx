@@ -17,7 +17,7 @@ const QuestionPage: React.FC = () => {
   return (
     <>
     <Header/>
-    <main className="min-h-fit h-screen py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
+    <main className="w-fit min-h-screen py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
       <section>
         <div className="flex flex-col justify-center items-center md:flex-row gap-20 md:gap-20 my-10">
           <h1 className="text-5xl md:text-5xl lg:text-6xl text-offBlue">Questions</h1>
@@ -29,7 +29,7 @@ const QuestionPage: React.FC = () => {
           data.questions.map((question: any) => {
             return (
               <div key={question.id} className="p-6 bg-primary-light text-secondary-dark uppercase rounded-xl bg-opacity-90 flex font-primary flex-col justify-between items-center gap-10 tracking-widest ">
-                <p className="card-title font-normal text-lg md:text-2xl">{question.question_text}</p>
+                <p className="card-title font-normal">{question.question_text}</p>
                 <div className="flex gap-3">
                   {/* When pressed, the answer button will link to /response also passing the question object - This option or state management. */}
                   <Link to={`/response/${question.id}`}  className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Answer</Link>
