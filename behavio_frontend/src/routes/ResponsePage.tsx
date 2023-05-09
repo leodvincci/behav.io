@@ -3,6 +3,8 @@ import Header from '../components/ui/Header'
 import SettingsImage from '../components/ui/SettingsImage'
 
 const ResponsePage: React.FC = () => {
+  // How do I get the question id from the url?
+  // How do I get the question text from the url?  
   return (
     <>
     <Header />
