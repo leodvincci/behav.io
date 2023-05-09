@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/ui/Header'
 import SettingsImage from '../components/ui/SettingsImage'
 import { Link, useLoaderData } from 'react-router-dom'
@@ -7,11 +7,11 @@ import QuestionsImage from '../components/ui/QuestionsImage'
 
 const QuestionPage: React.FC = () => {
   const data = useLoaderData()
-  console.log('testing:' + data)
-
+  const { id, question_text, category_id, is_favorite } = data.questions
+  const [isFavorite, setIsFavorite] = useState(is_favorite)
 
   const handleFavoriteQuestion = () => {
-    console.log('Favorite Question')
+    setIsFavorite(!isFavorite)
   }
   
   return (
@@ -35,7 +35,7 @@ const QuestionPage: React.FC = () => {
                   <Link to={`/response`}  className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">Answer</Link>
                   <aside onClick={handleFavoriteQuestion} className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg">
                     {/* // TODO Add logic to show filled heart if question is favorited NEED POST REQ TO UPDATE IS_FAVORITE */}
-                    {question.isFavorite ? <BsHeartFill /> : <BsHeart />} 
+                    {isFavorite ? <BsHeartFill /> : <BsHeart />} 
                   </aside>
                 </div>
               </div>
