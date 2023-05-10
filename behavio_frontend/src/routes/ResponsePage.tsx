@@ -30,6 +30,7 @@ const ResponsePage: React.FC = () => {
   const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault()
     console.log(questionData.question.id, 'question id')
+    console.log(localStorage.getItem('sessionid'))
     const response = {
       response_S: situation,
       response_T: task,
@@ -37,12 +38,15 @@ const ResponsePage: React.FC = () => {
       response_R: results,
       vid_link: youtubeLink,
       isPrivate: isPrivate,
+      auth: localStorage.getItem('session'),
     }
 
     const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Accept": "application/json",
+        'X-CSRFToken': localStorage.getItem('csrf-token') as string,
       },
       body: JSON.stringify(response),
     })

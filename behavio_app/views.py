@@ -1,11 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
+from rest_framework.permissions import AllowAny
 from django.middleware.csrf import get_token
+from django.contrib.auth import get_user_model
+from django.contrib.sessions.models import Session
 from .models import *
+
+User = get_user_model()
 
 
 # Create your views here.
@@ -28,6 +33,7 @@ def registration(request):
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def user_login(request):
     username = request.data["username"]
     password = request.data["password"]
@@ -35,7 +41,16 @@ def user_login(request):
     if user is not None:
         login(request, user)
 
-        return JsonResponse({"success": True, "user": model_to_dict(user)})
+        return JsonResponse(
+            {
+                "success": True,
+                "user": model_to_dict(user),
+                "tokens": {
+                    "csrf-token": get_token(request),
+                    "session": request.session.session_key,
+                },
+            }
+        )
     else:
         return JsonResponse({"success": False})
 
@@ -109,9 +124,12 @@ def response_handling(request, question_id, response_id=None):
             response_R = request.data["response_R"]
             vid_link = request.data["vid_link"]
             isPrivate = request.data["isPrivate"]
+            auth = request.data["auth"]
+
+            print(auth)
 
             new_response = Response.objects.create(
-                app_user=request.user.id,
+                app_user=request.user,
                 question=Question.objects.get(pk=question_id),
                 response_S=response_S,
                 response_T=response_T,

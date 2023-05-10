@@ -49,20 +49,12 @@ const LoginPage: React.FC = () => {
       console.log(response)
       if (data.success) {
         console.log(document)
-        // Get cookies from response
-        // const token = `; ${document.cookie}`
-        // const parts = token.split(`; csrftoken=`)
-        // console.log(parts)
-        // if (parts.length === 2) {
-        //   console.log(parts.pop()?.split(';').shift())
-        // }
 
-        // const session = response
-        // console.log(token, session)
+        // here logic for storingsI 
+        console.log(data)
 
-
-
-
+        localStorage.setItem('session', data.tokens['session'])
+        localStorage.setItem('csrf-token', data.tokens['csrf-token'])
         localStorage.setItem('isAuthenticated', 'true')
         localStorage.setItem('user', JSON.stringify(data.user))
         navigate('/dashboard')
