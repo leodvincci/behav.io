@@ -125,6 +125,8 @@ const router = createBrowserRouter([
                 const data = await response.json()
                 console.log(data.questions[0])
                 returndata.question = data.questions[0]
+
+                return returndata
               } catch (error) {
                 console.log(error)
               }
@@ -145,7 +147,7 @@ const router = createBrowserRouter([
               //   console.log(error)
               // }
 
-              return returndata
+              // return returndata
             },
           },
         ],

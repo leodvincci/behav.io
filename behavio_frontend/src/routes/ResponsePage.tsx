@@ -11,11 +11,30 @@ interface QuestionType {
   question_text: string;
 }
 
+function getCookie(name: string) {
+  let cookieValue = null;
+
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
+              break;
+          }
+      }
+  }
+
+  return cookieValue;
+}
+
 const ResponsePage: React.FC = () => {
   const questionData = useLoaderData() as any
   console.log(questionData)
   const [questionText, setQuestionText] = useState<string>(questionData.question.question_text)
-  
 
   const [situation, setSituation] = useState<string>('')
   const [task, setTask] = useState<string>('')
@@ -28,7 +47,7 @@ const ResponsePage: React.FC = () => {
 
   const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault()
-
+    console.log(questionData.question.id, 'question id')
     const response = {
       response_S: situation,
       response_T: task,
@@ -41,7 +60,9 @@ const ResponsePage: React.FC = () => {
     const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       },
       body: JSON.stringify(response),
     })

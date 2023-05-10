@@ -48,8 +48,11 @@ const LoginPage: React.FC = () => {
       })
 
       const data = await response.json()
+      
       console.log(data)
       if (data.success) {
+        // const session = response.headers.get('sessionid')
+        // localStorage.setItem('sessionid', session || '')
         localStorage.setItem('isAuthenticated', 'true')
         localStorage.setItem('user', JSON.stringify(data.user))
         navigate('/dashboard')
