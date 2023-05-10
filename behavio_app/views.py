@@ -169,7 +169,7 @@ def feedback_handling(request, response_id, feedback_id=None):
             response = get_object_or_404(Response, id=response_id)
 
             new_feedback = Feedback.objects.create(
-                Response=response_id,
+                response=Response.objects.get(pk=response_id),
                 feedback_text=feedback_text,
             )
 
@@ -185,7 +185,7 @@ def feedback_handling(request, response_id, feedback_id=None):
 
     if request.method == "GET":
         try:
-            feedbacks = Feedback.objects.filter(Response=response_id)
+            feedbacks = Feedback.objects.filter(response=response_id)
             feedback_list = []
 
             for feedback in feedbacks:
@@ -200,7 +200,7 @@ def feedback_handling(request, response_id, feedback_id=None):
     if request.method == "DELETE":
         try:
             feedback = get_object_or_404(Feedback, id=feedback_id)
-            response = get_object_or_404(Response, id=feedback.Response)
+            response = get_object_or_404(Response, id=feedback.response)
 
             feedback.delete()
 

@@ -25,7 +25,7 @@ class FavoritedQuestion(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user_id.name}: {self.question_id.question_text}"
+        return f"{self.app_user.first_name}: {self.question.question_text}"
 
 
 class Response(models.Model):
@@ -39,7 +39,7 @@ class Response(models.Model):
     isPrivate = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.user_id.name}: Q:{self.question_id}. Situation: {self.response_S}, Task: {self.response_T}, Action: {self.response_A}, Result: {self.response_R}"
+        return f"{self.app_user.first_name}: Q:{self.question_id}. Situation: {self.response_S}, Task: {self.response_T}, Action: {self.response_A}, Result: {self.response_R}"
 
 
 class Feedback(models.Model):
@@ -47,4 +47,4 @@ class Feedback(models.Model):
     feedback_text = models.TextField()
 
     def __str__(self):
-        return f"{self.response_id} | {self.feedback_text}"
+        return f"{self.response} | {self.feedback_text}"
