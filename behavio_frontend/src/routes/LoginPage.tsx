@@ -4,8 +4,6 @@ import Logo from '../components/ui/Logo'
 import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 
-
-
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -42,17 +40,29 @@ const LoginPage: React.FC = () => {
       const response = await fetch('http://127.0.0.1:8000/api/v1/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
       })
 
       const data = await response.json()
-      
-      console.log(data)
+      console.log(response)
       if (data.success) {
-        // const session = response.headers.get('sessionid')
-        // localStorage.setItem('sessionid', session || '')
+        console.log(document)
+        // Get cookies from response
+        // const token = `; ${document.cookie}`
+        // const parts = token.split(`; csrftoken=`)
+        // console.log(parts)
+        // if (parts.length === 2) {
+        //   console.log(parts.pop()?.split(';').shift())
+        // }
+
+        // const session = response
+        // console.log(token, session)
+
+
+
+
         localStorage.setItem('isAuthenticated', 'true')
         localStorage.setItem('user', JSON.stringify(data.user))
         navigate('/dashboard')

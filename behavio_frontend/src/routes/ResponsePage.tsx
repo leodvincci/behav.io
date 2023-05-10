@@ -4,6 +4,7 @@ import SettingsImage from '../components/ui/SettingsImage'
 import { useLoaderData } from 'react-router-dom';
 
 
+
 interface QuestionType {
   Category_id: number;
   id: number;
@@ -11,25 +12,6 @@ interface QuestionType {
   question_text: string;
 }
 
-function getCookie(name: string) {
-  let cookieValue = null;
-
-  if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-
-              break;
-          }
-      }
-  }
-
-  return cookieValue;
-}
 
 const ResponsePage: React.FC = () => {
   const questionData = useLoaderData() as any
@@ -60,9 +42,7 @@ const ResponsePage: React.FC = () => {
     const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken'),
       },
       body: JSON.stringify(response),
     })
@@ -75,12 +55,12 @@ const ResponsePage: React.FC = () => {
   return (
     <>
     <Header />
-    <main className="min-h-fit py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-32 p-3">
+    <main className="min-h-screen py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-32 p-3">
       <section className="flex flex-col md:flex-row gap-10 md:gap-20 items-center">
         <h1 className="text-5xl lg:text-6xl text-offBlue">Your Response</h1>
         <SettingsImage width={250} />
       </section>
-      <section className="w-full h-screen bg-accent max-w-6xl flex flex-col gap-20">
+      <section className="w-full min-h-content bg-accent max-w-6xl flex flex-col gap-20">
         <div>
           <h2 className="text-3xl lg:text-4xl font-primary tracking-wide text-center text-black border-red-400">{questionText}</h2>
         </div>

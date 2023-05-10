@@ -9,6 +9,9 @@ const LogoutPage: React.FC = () => {
   useEffect(() => {
     localStorage.removeItem('isAuthenticated')
     localStorage.removeItem('user')
+    localStorage.removeItem('sessionid')
+    localStorage.removeItem('csrf-token')
+    localStorage.removeItem('csrftoken')
     setTimeout(() => {
       navigate('/login')
     }, 2000)

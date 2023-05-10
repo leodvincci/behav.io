@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
+from django.middleware.csrf import get_token
 from .models import *
 
 
@@ -33,9 +34,8 @@ def user_login(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
-        print(username, password)
-        print("User Authorized: ", user)
-        return JsonResponse({"success": True})
+
+        return JsonResponse({"success": True, "user": model_to_dict(user)})
     else:
         return JsonResponse({"success": False})
 
@@ -83,11 +83,26 @@ def category(request):
     return JsonResponse({"categories": categories})
 
 
+@api_view(["GET"])
+# Returns token and session id
+def tokens(request):
+    return JsonResponse(
+        {
+            "csrf-token": get_token(request),
+            "session": request.session.session_key,
+        }
+    )
+
+
 @api_view(["POST", "PUT", "GET", "DELETE"])
 def response_handling(request, question_id, response_id=None):
+    if request.user.is_authenticated:
+        print(f"User is authenticated: {request.user.is_authenticated}")
+    else:
+        print(f"User is NOT authenticated: {request.user.is_authenticated}")
+
     if request.method == "POST":
         try:
-
             response_S = request.data["response_S"]
             response_T = request.data["response_T"]
             response_A = request.data["response_A"]
@@ -96,7 +111,7 @@ def response_handling(request, question_id, response_id=None):
             isPrivate = request.data["isPrivate"]
 
             new_response = Response.objects.create(
-                app_user_id=request.user.id,
+                app_user=request.user.id,
                 question=Question.objects.get(pk=question_id),
                 response_S=response_S,
                 response_T=response_T,
