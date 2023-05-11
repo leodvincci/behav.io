@@ -17,6 +17,7 @@ import ProfileSettingsPage from './routes/ProfileSettingsPage';
 import QuestionsPage from './routes/QuestionsPage';
 import QuestionPage from './routes/QuestionPage';
 import LoaderPage from './routes/LoaderPage';
+import ResponsesPage from './routes/ResponsesPage';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <DashboardPage />,
+      },
+      {
+        path: "/responses",
+        element: <ResponsesPage />,
       },
       {
         path: "/questions",
@@ -135,24 +140,6 @@ const router = createBrowserRouter([
               } catch (error) {
                 console.log(error)
               }
-
-
-              // try {
-              //   const response = await fetch(`http://127.0.0.1:8000/api/v1/response/${question_id}`, {
-              //     method: 'GET',
-              //     headers: {
-              //       'Content-Type': 'application/json',
-              //     },
-              //   })
-              //   const data = await response.json()
-              //   console.log(data.responses)
-              
-              //   returndata.responses = data.responses
-              // } catch (error) {
-              //   console.log(error)
-              // }
-
-              // return returndata
             },
           },
         ],
