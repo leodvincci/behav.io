@@ -48,11 +48,6 @@ const LoginPage: React.FC = () => {
       const data = await response.json()
       console.log(response)
       if (data.success) {
-        console.log(document)
-
-        // here logic for storingsI 
-        console.log(data)
-
         localStorage.setItem('session', data.tokens['session'])
         localStorage.setItem('csrf-token', data.tokens['csrf-token'])
         localStorage.setItem('isAuthenticated', 'true')
