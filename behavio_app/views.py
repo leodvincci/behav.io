@@ -127,9 +127,13 @@ def response_handling(request, question_id, response_id=None):
             auth = request.data["auth"]
 
             print(auth)
+            session = Session.objects.get(session_key = auth)
+            uid = session.get_decoded().get('_auth_user_id')
+            user = User.objects.get(pk=uid)
+            print("USER: ",user)
 
             new_response = Response.objects.create(
-                app_user=request.user,
+                app_user=User.objects.get(email = user),
                 question=Question.objects.get(pk=question_id),
                 response_S=response_S,
                 response_T=response_T,
@@ -140,6 +144,7 @@ def response_handling(request, question_id, response_id=None):
                 # feedbackCounter=0,
             )
 
+            print(new_response)
             new_response.save()
             return JsonResponse({"success": True})
 
