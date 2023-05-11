@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/ui/Header'
 import SettingsImage from '../components/ui/SettingsImage'
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 
 
@@ -15,8 +15,8 @@ interface QuestionType {
 
 const ResponsePage: React.FC = () => {
   const questionData = useLoaderData() as any
-  console.log(questionData)
   const [questionText, setQuestionText] = useState<string>(questionData.question.question_text)
+  const navigate = useNavigate();
 
   const [situation, setSituation] = useState<string>('')
   const [task, setTask] = useState<string>('')
@@ -29,8 +29,7 @@ const ResponsePage: React.FC = () => {
 
   const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault()
-    console.log(questionData.question.id, 'question id')
-    console.log(localStorage.getItem('sessionid'))
+
     const response = {
       response_S: situation,
       response_T: task,
@@ -52,6 +51,11 @@ const ResponsePage: React.FC = () => {
     })
 
     const data = await res.json()
+
+    if (data.success) {
+      console.log('Response Posted')
+      navigate('/loading')
+    }
     console.log(data)
 }
 
@@ -60,10 +64,10 @@ const ResponsePage: React.FC = () => {
     <>
     <Header />
     <main className="min-h-screen py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-32 p-3">
-      <section className="flex flex-col md:flex-row gap-10 md:gap-20 items-center">
+      {/* <section className="flex flex-col md:flex-row gap-10 md:gap-20 items-center">
         <h1 className="text-5xl lg:text-6xl text-offBlue">Your Response</h1>
         <SettingsImage width={250} />
-      </section>
+      </section> */}
       <section className="w-full min-h-content bg-accent max-w-6xl flex flex-col gap-20">
         <div>
           <h2 className="text-3xl lg:text-4xl font-primary tracking-wide text-center text-black border-red-400">{questionText}</h2>

@@ -16,6 +16,7 @@ import LogoutPage from './routes/LogoutPage';
 import ProfileSettingsPage from './routes/ProfileSettingsPage';
 import QuestionsPage from './routes/QuestionsPage';
 import QuestionPage from './routes/QuestionPage';
+import LoaderPage from './routes/LoaderPage';
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "/logout",
         element: <LogoutPage />,
+      },
+      {
+        path: "/loading",
+        element: <LoaderPage />,
       },
       {
         path: "/profile-settings",

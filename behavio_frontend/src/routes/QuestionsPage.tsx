@@ -3,7 +3,7 @@ import Header from "../components/ui/Header"
 import SettingsImage from "../components/ui/SettingsImage"
 import { Link } from "react-router-dom"
 import {BsHeart, BsHeartFill} from 'react-icons/bs'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import QuestionsImage from "../components/ui/QuestionsImage"
 
 const QuestionsPage = () => {
