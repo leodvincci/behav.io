@@ -110,6 +110,12 @@ def tokens(request):
         }
     )
 
+def authUser(request):
+    auth = request.data["auth"]
+    session = Session.objects.get(session_key = auth)
+    uid = session.get_decoded().get('_auth_user_id')
+    user = User.objects.get(pk=uid)
+    return user
 
 @api_view(["POST", "PUT", "GET", "DELETE"])
 def response_handling(request, question_id, response_id=None):
@@ -117,7 +123,10 @@ def response_handling(request, question_id, response_id=None):
         print(f"User is authenticated: {request.user.is_authenticated}")
     else:
         print(f"User is NOT authenticated: {request.user.is_authenticated}")
-
+        
+    user = authUser(request)
+    
+    
     if request.method == "POST":
         try:
             response_S = request.data["response_S"]
@@ -126,13 +135,7 @@ def response_handling(request, question_id, response_id=None):
             response_R = request.data["response_R"]
             vid_link = request.data["vid_link"]
             isPrivate = request.data["isPrivate"]
-            auth = request.data["auth"]
-
-            print(auth)
-            session = Session.objects.get(session_key=auth)
-            uid = session.get_decoded().get('_auth_user_id')
-            user = User.objects.get(pk=uid)
-            print("USER: ", user)
+            
 
             new_response = Response.objects.create(
                 app_user=User.objects.get(email=user),
@@ -159,7 +162,7 @@ def response_handling(request, question_id, response_id=None):
         try:
             if response_id:
                 response = get_object_or_404(
-                    Response, id=response_id, app_user=request.user
+                    Response, id=response_id, app_user=user
                 )
                 data = request.data
                 for key, value in data.items():
@@ -174,7 +177,7 @@ def response_handling(request, question_id, response_id=None):
         # GET single response
         if response_id:
             response = get_object_or_404(
-                Response, id=response_id, app_user=request.user
+                Response, id=response_id, app_user=user
             )
             response_dict = model_to_dict(response)
             return JsonResponse({"response": response_dict})
@@ -182,7 +185,7 @@ def response_handling(request, question_id, response_id=None):
         else:
             try:
                 responses = list(
-                    Response.objects.filter(app_user=request.user).values()
+                    Response.objects.filter(app_user=user).values()
                 )
                 return JsonResponse({"responses": responses})
             except Exception as e:
@@ -192,7 +195,7 @@ def response_handling(request, question_id, response_id=None):
     if request.method == "DELETE":
         try:
             response = get_object_or_404(
-                Response, id=response_id, app_user=request.user
+                Response, id=response_id, app_user=user
             )
             response.delete()
             return JsonResponse({"success": True})
@@ -255,6 +258,10 @@ def feedback_handling(request, response_id, feedback_id=None):
 
 @api_view(["POST", "GET", "DELETE"])
 def favorite_handling(request, question_id, favorite_id=None):
+
+    user = authUser(request)
+    
+
     # Adds question to "FavoritedQuestion" table for easy access to all favorites, also sets the 'isFavorite' field on the Questions model to True for easy access that way
     if request.method == "POST":
         try:
@@ -286,7 +293,7 @@ def favorite_handling(request, question_id, favorite_id=None):
     if request.method == "GET":
         try:
             favorites = list(
-                FavoritedQuestion.objects.filter(app_user=request.user).values()
+                FavoritedQuestion.objects.filter(app_user=user).values()
             )
 
             return JsonResponse({"favorites": favorites})
@@ -298,7 +305,7 @@ def favorite_handling(request, question_id, favorite_id=None):
     if request.method == "DELETE":
         try:
             favorite = get_object_or_404(
-                FavoritedQuestion, id=favorite_id, app_user=request.user
+                FavoritedQuestion, id=favorite_id, app_user=user
             )
             question = get_object_or_404(Question, id=favorite.question)
             favorite.delete()
