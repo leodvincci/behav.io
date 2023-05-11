@@ -34,6 +34,11 @@ urlpatterns = [
         name="questions_by_question_id",
     ),
     path(
+        "api/v1/question/random",
+        views.random,
+        name="questions_random",
+    ),
+    path(
         "api/v1/questions/<str:category_txt>/",
         views.question,
         name="questions_by_category",
