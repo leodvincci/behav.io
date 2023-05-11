@@ -37,6 +37,7 @@ class Response(models.Model):
     response_R = models.TextField()
     vid_link = models.URLField(blank=True, null=True)
     isPrivate = models.BooleanField(default=True)
+    feedbackCounter = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.app_user.first_name}: Q:{self.question_id}. Situation: {self.response_S}, Task: {self.response_T}, Action: {self.response_A}, Result: {self.response_R}"
