@@ -36,7 +36,6 @@ const ResponsePage: React.FC = () => {
       response_R: results,
       vid_link: youtubeLink,
       isPrivate: isPrivate,
-      auth: localStorage.getItem("session"),
     };
 
     const res = await fetch(
