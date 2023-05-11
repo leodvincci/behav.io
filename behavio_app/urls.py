@@ -8,6 +8,7 @@ urlpatterns = [
     path("api/v1/login", views.user_login, name="user_login"),
     path("api/v1/logout", views.user_logout, name="user_logout"),
     path("api/v1/questions", views.question, name="questions"),
+    path("api/v1/session/", views.set_session_user, name="session"),
     path(
         "api/v1/questions/<int:question_id>/",
         views.question,

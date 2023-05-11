@@ -14,6 +14,8 @@ import random as randGen
 
 User = get_user_model()
 
+user_session = None  # global variable to store session
+
 
 # Create your views here.
 @api_view(["POST"])
@@ -32,6 +34,25 @@ def registration(request):
     app_user.save()
     print(app_user)
     return JsonResponse({"success": True})
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def set_session_user(request):
+    session_id = request.data["session"]
+    user = authUser(session_id)
+
+    #
+
+    print("User stored:", user)
+    return JsonResponse({"success": True, "user": model_to_dict(user)})
+
+
+def authUser(session_id):
+    session = Session.objects.get(session_key=session_id)
+    uid = session.get_decoded().get("_auth_user_id")
+    user = User.objects.get(pk=uid)
+    return user
 
 
 @api_view(["POST"])
@@ -111,23 +132,8 @@ def tokens(request):
     )
 
 
-def authUser(request):
-    auth = request.data["auth"]
-    session = Session.objects.get(session_key=auth)
-    uid = session.get_decoded().get("_auth_user_id")
-    user = User.objects.get(pk=uid)
-    return user
-
-
 @api_view(["POST", "PUT", "GET", "DELETE"])
 def response_handling(request, question_id, response_id=None):
-    if request.user.is_authenticated:
-        print(f"User is authenticated: {request.user.is_authenticated}")
-    else:
-        print(f"User is NOT authenticated: {request.user.is_authenticated}")
-
-    user = authUser(request)
-
     if request.method == "POST":
         try:
             response_S = request.data["response_S"]
