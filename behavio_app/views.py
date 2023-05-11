@@ -141,7 +141,7 @@ def response_handling(request, question_id, response_id=None):
                 response_R=response_R,
                 vid_link=vid_link,
                 isPrivate=isPrivate,
-                # feedbackCounter=0,
+                feedbackCounter=0,
             )
 
             print(new_response)
