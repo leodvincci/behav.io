@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import LoginPage from './routes/LoginPage';
@@ -16,7 +16,6 @@ import LogoutPage from './routes/LogoutPage';
 import ProfileSettingsPage from './routes/ProfileSettingsPage';
 import QuestionsPage from './routes/QuestionsPage';
 import QuestionPage from './routes/QuestionPage';
-import ResponseMenu from './routes/ResponseMenu';
 
 const router = createBrowserRouter([
   {
@@ -48,11 +47,12 @@ const router = createBrowserRouter([
         }
       },
       {
-        path: "questions/:catid",
+        path: "questions/:category_txt",
         element: <QuestionPage />,
         loader: async ({params}) => {
           try {
-            const response = await fetch(`http://localhost:8000/api/v1/questions/${params.catid}`)
+            const response = await fetch(`http://localhost:8000/api/v1/questions/${params.category_txt}`)
+
             return await response.json()
           } catch (error) {
             console.log(error)
@@ -73,10 +73,13 @@ const router = createBrowserRouter([
             element: <QuestionPage />,
             loader: async ({params}) => {
               try {
-                const response = await fetch(`http://localhost:8000/api/v1/categories/${params.catid}`)
-                const data = await response.json()
-                console.log(data)
-                return data
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/categories/${params.catid}`, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
+                return await response.json()
               } catch (error) {
                 console.log(error)
               }
@@ -101,17 +104,50 @@ const router = createBrowserRouter([
         errorElement: <NotFound />,
         children: [
           {
-            path: ":questionid",
+            path: ":question_id",
             element: <ResponsePage />,
             loader: async ({params}) => {
+              console.log(params)
+              const { question_id } = params
+
+              const returndata = {
+                question: {},
+                responses: [],
+              }
+
               try {
-                const response = await fetch(`http://localhost:8000/api/v1/questions/${params.questionid}`)
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${question_id}`, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
                 const data = await response.json()
-                console.log(data)
-                return data
+                console.log(data.questions[0])
+                returndata.question = data.questions[0]
+
+                return returndata
               } catch (error) {
                 console.log(error)
               }
+
+
+              // try {
+              //   const response = await fetch(`http://127.0.0.1:8000/api/v1/response/${question_id}`, {
+              //     method: 'GET',
+              //     headers: {
+              //       'Content-Type': 'application/json',
+              //     },
+              //   })
+              //   const data = await response.json()
+              //   console.log(data.responses)
+              
+              //   returndata.responses = data.responses
+              // } catch (error) {
+              //   console.log(error)
+              // }
+
+              // return returndata
             },
           },
         ],

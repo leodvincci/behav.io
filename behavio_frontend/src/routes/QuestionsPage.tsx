@@ -8,6 +8,7 @@ import QuestionsImage from "../components/ui/QuestionsImage"
 
 const QuestionsPage = () => {
   const data = useLoaderData() // Loads the  data from the loader in main.jsx
+  console.log(data)
   const {id, question_text, category_id, is_favorite} = data.questions
   const [isFavorite, setIsFavorite] = useState(is_favorite)
 
