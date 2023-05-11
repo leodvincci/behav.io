@@ -249,3 +249,61 @@ def feedback_handling(request, response_id, feedback_id=None):
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({"success": False})
+
+
+@api_view(["POST", "GET", "DELETE"])
+def favorite_handling(request, question_id, favorite_id=None):
+    
+    # Adds question to "FavoritedQuestion" table for easy access to all favorites, also sets the 'isFavorite' field on the Questions model to True for easy access that way
+    if request.method == "POST":
+        try:
+            question = get_object_or_404(Question, id=question_id)
+            
+            # Fix from response_handling applied here as well
+            auth = request.data["auth"]
+            session = Session.objects.get(session_key = auth)
+            uid = session.get_decoded().get('_auth_user_id')
+            user = User.objects.get(pk=uid)
+            
+            new_favorite = FavoritedQuestion.objects.create(
+                app_user=User.objects.get(email = user),
+                question=Question.objects.get(pk=question_id)
+            )
+            
+            new_favorite.save()
+            
+            question.isFavorite = True
+            question.save()
+            
+            return JsonResponse({"success": True})
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"success": False})
+    
+    # GET's all favorites 
+    if request.method == "GET":
+        try:
+            favorites = list(
+                FavoritedQuestion.objects.filter(app_user=request.user).values()
+            )
+            
+            return JsonResponse({"favorites": favorites})
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"success": False})
+    
+    # DELETE's favorite from table, resets question 'isFavorite' value to False
+    if request.method == "DELETE":
+        try:
+            favorite = get_object_or_404(
+                FavoritedQuestion, id=favorite_id, app_user=request.user
+            )
+            question = get_object_or_404(Question, id=favorite.question)
+            favorite.delete()
+            question.isFavorite = False
+            question.save()
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"success": False})
