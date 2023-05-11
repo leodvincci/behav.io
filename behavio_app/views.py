@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -312,8 +313,6 @@ def favorite_handling(request, question_id, favorite_id=None):
 @api_view(["GET"])
 def random(request):
     questions_count = len(list(Question.objects.all()))
-    random_number = randGen.randint(1,questions_count-1)
-
-    rand_question = list(Question.objects.filter(pk=random_number).values())
-    print(random_number)
-    return JsonResponse({"question": rand_question})
+    random_number = randGen.randint(1,questions_count)
+    rand_question = Question.objects.filter(pk=random_number)
+    return JsonResponse({"question": model_to_dict( rand_question.get())})
