@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -9,6 +10,7 @@ from django.middleware.csrf import get_token
 from django.contrib.auth import get_user_model
 from django.contrib.sessions.models import Session
 from .models import *
+import random as randGen
 
 User = get_user_model()
 
@@ -133,12 +135,10 @@ def response_handling(request, question_id, response_id=None):
             response_R = request.data["response_R"]
             vid_link = request.data["vid_link"]
             isPrivate = request.data["isPrivate"]
-
-            # print(auth)
-            print("USER: ",user)
+            
 
             new_response = Response.objects.create(
-                app_user=User.objects.get(email = user),
+                app_user=User.objects.get(email=user),
                 question=Question.objects.get(pk=question_id),
                 response_S=response_S,
                 response_T=response_T,
@@ -258,48 +258,49 @@ def feedback_handling(request, response_id, feedback_id=None):
 
 @api_view(["POST", "GET", "DELETE"])
 def favorite_handling(request, question_id, favorite_id=None):
-    
+
     user = authUser(request)
     
+
     # Adds question to "FavoritedQuestion" table for easy access to all favorites, also sets the 'isFavorite' field on the Questions model to True for easy access that way
     if request.method == "POST":
         try:
             question = get_object_or_404(Question, id=question_id)
-            
+
             # Fix from response_handling applied here as well
             auth = request.data["auth"]
-            session = Session.objects.get(session_key = auth)
+            session = Session.objects.get(session_key=auth)
             uid = session.get_decoded().get('_auth_user_id')
             user = User.objects.get(pk=uid)
-            
+
             new_favorite = FavoritedQuestion.objects.create(
-                app_user=User.objects.get(email = user),
+                app_user=User.objects.get(email=user),
                 question=Question.objects.get(pk=question_id)
             )
-            
+
             new_favorite.save()
-            
+
             question.isFavorite = True
             question.save()
-            
+
             return JsonResponse({"success": True})
-        
+
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({"success": False})
-    
+
     # GET's all favorites 
     if request.method == "GET":
         try:
             favorites = list(
                 FavoritedQuestion.objects.filter(app_user=user).values()
             )
-            
+
             return JsonResponse({"favorites": favorites})
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({"success": False})
-    
+
     # DELETE's favorite from table, resets question 'isFavorite' value to False
     if request.method == "DELETE":
         try:
@@ -310,7 +311,15 @@ def favorite_handling(request, question_id, favorite_id=None):
             favorite.delete()
             question.isFavorite = False
             question.save()
-        
+
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({"success": False})
+
+
+@api_view(["GET"])
+def random(request):
+    questions_count = len(list(Question.objects.all()))
+    random_number = randGen.randint(1,questions_count)
+    rand_question = Question.objects.filter(pk=random_number)
+    return JsonResponse({"question": model_to_dict( rand_question.get())})
