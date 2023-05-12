@@ -64,6 +64,7 @@ def user_login(request):
 @permission_classes([AllowAny])
 def user_logout(request):
     logout(request)
+    print("logged out")
     return JsonResponse({"success": True})
 
 
