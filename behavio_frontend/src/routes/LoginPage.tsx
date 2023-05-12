@@ -38,6 +38,7 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await fetch('http://127.0.0.1:8000/api/v1/login', {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,6 +50,7 @@ const LoginPage: React.FC = () => {
       console.log(data)
       if (data.success) {
         localStorage.setItem('username', data.username)
+        localStorage.setItem('isAuthenticated', 'true')
         try {
           const response = await fetch('http://127.0.0.1:8000/api/v1/csrf', {
             credentials: 'include',
