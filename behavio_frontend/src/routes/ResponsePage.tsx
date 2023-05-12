@@ -30,8 +30,6 @@ const ResponsePage: React.FC = () => {
   const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.dir(document)
-
 
     const response = {
       response_S: situation,
@@ -43,8 +41,8 @@ const ResponsePage: React.FC = () => {
     };
 
     const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
-        credentials: 'include',
-        method: "POST",
+      credentials: 'include',
+      method: "POST",
         headers: {
           "Content-Type": "application/json",
           'X-CSRFToken': `${localStorage.getItem('csrftoken')}`,
@@ -61,8 +59,9 @@ const ResponsePage: React.FC = () => {
     if (data.success) {
       console.log("Response Posted");
       navigate("/loading");
+    } else {
+      console.log(data);
     }
-    console.log(data);
   };
 
   return (

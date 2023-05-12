@@ -77,6 +77,7 @@ def user_logout(request):
 
 
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def question(request, question_id=None, category_txt=None):
     if question_id:
         try:
