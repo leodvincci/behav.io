@@ -46,7 +46,9 @@ const LoginPage: React.FC = () => {
       })
 
       const data = await response.json()
+      console.log(data)
       if (data.success) {
+        localStorage.setItem('username', data.username)
         try {
           const response = await fetch('http://127.0.0.1:8000/api/v1/csrf', {
             credentials: 'include',
@@ -57,7 +59,7 @@ const LoginPage: React.FC = () => {
           })
 
           const data = await response.json()
-          
+          console.log(data)
           if (data.csrf) {
             localStorage.setItem('csrftoken', data.csrf)
           }

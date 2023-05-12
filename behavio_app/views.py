@@ -53,9 +53,16 @@ def user_login(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
-        print(request.COOKIES)
 
-        return JsonResponse({"success": True, "sessionid": request.session.session_key})
+        # Filter username to return only everything before the @ symbol
+        username = username.split("@")[0]
+        return JsonResponse(
+            {
+                "success": True,
+                "sessionid": request.session.session_key,
+                "username": username,
+            }
+        )
     else:
         return JsonResponse({"success": False})
 
