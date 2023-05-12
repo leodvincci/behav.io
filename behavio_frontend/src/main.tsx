@@ -59,7 +59,14 @@ const router = createBrowserRouter([
         path: "/questions",
         element: <QuestionsPage />,
         loader: async () => {
-          const response = await fetch('http://localhost:8000/api/v1/questions')
+          const response = await fetch('http://localhost:8000/api/v1/questions', {
+            credentials: 'include',
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': `${localStorage.getItem('csrftoken')}`
+            },
+          })
           return await response.json()
         }
       },
