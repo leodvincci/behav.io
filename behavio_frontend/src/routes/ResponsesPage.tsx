@@ -6,9 +6,40 @@ import {BsHeart, BsHeartFill} from 'react-icons/bs'
 import { useEffect, useState } from "react"
 import QuestionsImage from "../components/ui/QuestionsImage"
 
+
+export interface ResponseType {
+  app_user_id: number
+  feedbackCounter: number
+  id: number
+  response_S: string
+  response_T: string
+  response_A: string
+  response_R: string
+  vid_link: string
+  isPrivate: boolean
+  question_id: number
+}
+
 const ResponsesPage = () => {
   const data = useLoaderData() // Loads the  data from the loader in main.jsx
   console.log(data)
+
+  const fetchQuestion = async (id: number) => {
+    const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${id}/`, {
+      credentials: 'include',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await response.json()
+    console.log(data)
+    if (data.questions) {
+      return data.questions
+    } else {
+      return 'Error'
+    }
+  }
   return (
     <>
       <Header/>
@@ -21,10 +52,11 @@ const ResponsesPage = () => {
         </section>
         <section className="grid grid-cols-1 bg-primary-dark rounded-xl w-full p-10 text-center lg:grid-cols-2 gap-10">
           {
-            data.responses.map((response: any) => {
+            data.responses.map((response: ResponseType) => {
               return (
                 <div key={response.id} className="p-10 bg-primary-light text-secondary uppercase rounded-xl bg-opacity-90 flex flex-col justify-between items-center gap-32 tracking-widest">
-                  <h3 className="card-title">QUESTION: Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, voluptate! {response.question_id}</h3>
+                  {/* Call fetchQuestion to call the questions API and return its text */}
+                  <p>QUESTION {response.question_id}</p>
                   <div className="flex flex-col">
                     <ul className="flex flex-col gap-4">
                       <li className="card-text flex flex-col gap-1">

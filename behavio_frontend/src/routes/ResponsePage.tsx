@@ -30,7 +30,8 @@ const ResponsePage: React.FC = () => {
   const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-
+    // SHOULD I PASS questionText in the response?
+    // const questionText = questionData.question.question_text;
     const response = {
       response_S: situation,
       response_T: task,
@@ -38,6 +39,7 @@ const ResponsePage: React.FC = () => {
       response_R: results,
       vid_link: youtubeLink,
       isPrivate: isPrivate,
+      // questionText: questionText,
     };
 
     const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
