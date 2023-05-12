@@ -39,7 +39,6 @@ const ResponsePage: React.FC = () => {
       response_R: results,
       vid_link: youtubeLink,
       isPrivate: isPrivate,
-      // questionText: questionText,
     };
 
     const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
