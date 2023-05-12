@@ -138,6 +138,7 @@ def response_handling(request, question_id=None, response_id=None):
                 vid_link=vid_link,
                 isPrivate=isPrivate,
                 feedbackCounter=0,
+                question_text = Question.objects.get(pk=question_id).question_text
             )
 
             print(new_response)

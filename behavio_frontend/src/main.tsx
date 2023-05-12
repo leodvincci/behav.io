@@ -43,7 +43,9 @@ const router = createBrowserRouter([
       {
         path: "/responses",
         element: <ResponsesPage />,
-        loader: async () => {
+        loader: async ({params}) => {
+          const questionId = params.question_id
+          console.log(questionId)
           const response = await fetch('http://127.0.0.1:8000/api/v1/responses/', {
             credentials: 'include',
             method: 'GET',
@@ -51,7 +53,9 @@ const router = createBrowserRouter([
               'Content-Type': 'application/json',
             },
           })
-          return await response.json()
+          const data = await response.json()
+          console.log(data)
+          return data
         }
 
       },
