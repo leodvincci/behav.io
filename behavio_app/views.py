@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.sessions.models import Session
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import *
+from .utils import *
 import random as randGen
 
 User = get_user_model()
@@ -310,3 +311,32 @@ def random(request):
     random_number = randGen.randint(1, questions_count)
     rand_question = Question.objects.filter(pk=random_number)
     return JsonResponse({"question": model_to_dict(rand_question.get())})
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def auto_feedback(request, response_id):
+    try:
+        response  = Response.objects.get(pk=response_id)
+        gpt_input = {
+            "situation": response.response_S,
+            "task": response.response_T,
+            "action": response.response_A,
+            "result": response.response_R,
+            "question": response.question_text,
+        }
+        
+        gpt_feedback = generate_feedback(gpt_input)
+        
+        Feedback.objects.create(
+            response = response,
+            feedback_text = gpt_feedback,
+        )
+        
+        return JsonResponse({"success": True})
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return JsonResponse({"success": False})
+
+        
+        

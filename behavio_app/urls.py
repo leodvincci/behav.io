@@ -46,6 +46,11 @@ urlpatterns = [
         name="delete_feedback",
     ),
     path(
+        "api/v1/auto_feedback/<int:response_id>/",
+        views.auto_feedback,
+        name="auto_feedback",
+    ),
+    path(
         "api/v1/favorites/",
         views.favorite_handling,
         name="get_favorites",
