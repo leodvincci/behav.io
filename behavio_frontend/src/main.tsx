@@ -64,10 +64,10 @@ const router = createBrowserRouter([
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
+              'X-CSRFToken': `${localStorage.getItem('csrftoken')}`
             },
           })
-          const data = await response.json()
-          console.log(data)
+          return await response.json()
         }
       },
       {
