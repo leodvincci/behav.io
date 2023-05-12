@@ -25,22 +25,6 @@ const ResponsesPage = () => {
   const data = useLoaderData() // Loads the  data from the loader in main.jsx
   console.log(data)
 
-  // const fetchQuestion = async (id: number) => {
-  //   const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${id}/`, {
-  //     credentials: 'include',
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //   const data = await response.json()
-  //   console.log(data)
-  //   if (data.questions) {
-  //     return data.questions
-  //   } else {
-  //     return 'Error'
-  //   }
-  // }
   return (
     <>
       <Header/>
