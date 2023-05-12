@@ -71,6 +71,7 @@ def user_login(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def user_logout(request):
+    print(request.user.is_authenticated)
     logout(request)
     print("logged out")
     return JsonResponse({"success": True})
