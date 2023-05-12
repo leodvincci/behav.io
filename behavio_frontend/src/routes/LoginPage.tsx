@@ -56,10 +56,11 @@ const LoginPage: React.FC = () => {
         try {
           // Send post request to create a new session
           const sessionResponse = await fetch('http://127.0.0.1:8000/api/v1/session/', {
+            credentials: 'include',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              "X-CSRFToken": localStorage.getItem("csrf-token") as string,
+              "X-CSRFToken": localStorage.getItem("csrftoken") as string,
             },
             body: JSON.stringify({
               'session': data.tokens['session'],

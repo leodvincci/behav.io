@@ -43,6 +43,17 @@ const router = createBrowserRouter([
       {
         path: "/responses",
         element: <ResponsesPage />,
+        // loader: async () => {
+        //   const response = await fetch('http://localhost:8000/api/v1/responses', {
+        //     credentials: 'include',
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //   })
+        //   return await response.json()
+        // }
+
       },
       {
         path: "/questions",

@@ -18,7 +18,7 @@ const ResponsesPage = () => {
     auth: localStorage.getItem("session"),
   };
   const sendSessionId = async () => {
-    const response = await fetch('http://localhost:8000/api/v1/responses', {
+    const response = await fetch('http://localhost:8000/api/v1/responses/', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

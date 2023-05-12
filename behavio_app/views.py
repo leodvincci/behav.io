@@ -9,6 +9,7 @@ from rest_framework.permissions import AllowAny
 from django.middleware.csrf import get_token
 from django.contrib.auth import get_user_model
 from django.contrib.sessions.models import Session
+from django.contrib.sessions.backends.db import SessionStore
 from .models import *
 import random as randGen
 
@@ -41,6 +42,7 @@ def registration(request):
 def set_session_user(request):
     session_id = request.data["session"]
     user = authUser(session_id)
+    print("User:", user)
 
     #
 
@@ -67,11 +69,11 @@ def user_login(request):
         return JsonResponse(
             {
                 "success": True,
-                "user": model_to_dict(user),
-                "tokens": {
-                    "csrf-token": get_token(request),
-                    "session": request.session.session_key,
-                },
+                # "user": model_to_dict(user),
+                # "tokens": {
+                #     "csrf-token": get_token(request),
+                #     "session": request.session.session_key,
+                # },
             }
         )
     else:
@@ -133,7 +135,11 @@ def tokens(request):
 
 
 @api_view(["POST", "PUT", "GET", "DELETE"])
-def response_handling(request, question_id, response_id=None):
+@permission_classes([AllowAny])
+def response_handling(request, question_id=None, response_id=None):
+    session = SessionStore()
+    session_key = session.session_key
+    print("session_key:", session_key)
     if request.method == "POST":
         try:
             response_S = request.data["response_S"]
@@ -144,7 +150,7 @@ def response_handling(request, question_id, response_id=None):
             isPrivate = request.data["isPrivate"]
 
             new_response = Response.objects.create(
-                app_user=User.objects.get(email=user),
+                app_user=User.objects.get(email=user.email),
                 question=Question.objects.get(pk=question_id),
                 response_S=response_S,
                 response_T=response_T,
@@ -179,6 +185,7 @@ def response_handling(request, question_id, response_id=None):
 
     if request.method == "GET":
         # GET single response
+        print("user 1234:", request.session.session_key)
         if response_id:
             response = get_object_or_404(Response, id=response_id, app_user=user)
             response_dict = model_to_dict(response)
