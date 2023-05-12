@@ -6,12 +6,21 @@ const LogoutPage: React.FC = () => {
   // 1. Remove token from local storage
   // 2. setTimeout to do some stuff then Redirect to login page from this page
 
+  const logoutUser = async () => {
+    const response = await fetch('http://127.0.0.1:8000/api/v1/logout/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+    })
+
+    const data = response.json()
+    console.log(data)
+  }
   useEffect(() => {
-    localStorage.removeItem('isAuthenticated')
-    localStorage.removeItem('user')
-    localStorage.removeItem('sessionid')
-    localStorage.removeItem('csrf-token')
-    localStorage.removeItem('csrftoken')
+    // POST Request to logout
+
     setTimeout(() => {
       navigate('/login')
     }, 2000)

@@ -17,6 +17,7 @@ import ProfileSettingsPage from './routes/ProfileSettingsPage';
 import QuestionsPage from './routes/QuestionsPage';
 import QuestionPage from './routes/QuestionPage';
 import LoaderPage from './routes/LoaderPage';
+import ResponsesPage from './routes/ResponsesPage';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,21 @@ const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
+        path: "/responses",
+        element: <ResponsesPage />,
+        loader: async () => {
+          const response = await fetch('http://127.0.0.1:8000/api/v1/responses/', {
+            credentials: 'include',
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          return await response.json()
+        }
+
+      },
+      {
         path: "/questions",
         element: <QuestionsPage />,
         loader: async () => {
@@ -52,9 +68,14 @@ const router = createBrowserRouter([
         element: <QuestionPage />,
         loader: async ({params}) => {
           try {
-            const response = await fetch(`http://localhost:8000/api/v1/questions/${params.category_txt}`)
-
-            return await response.json()
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${params.category_txt}/`, {
+              credentials: 'include',
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+            return response.json()
           } catch (error) {
             console.log(error)
           }
@@ -64,8 +85,13 @@ const router = createBrowserRouter([
         path: "/categories",
         element: <CategoriesPage />,
         loader: async ({params}) => {
-          console.log(params)
-          const response = await fetch('http://localhost:8000/api/v1/categories')
+          const response = await fetch('http://127.0.0.1:8000/api/v1/categories/', {
+            credentials: 'include',
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
           return await response.json()
         },
         children: [
@@ -75,12 +101,14 @@ const router = createBrowserRouter([
             loader: async ({params}) => {
               try {
                 const response = await fetch(`http://127.0.0.1:8000/api/v1/categories/${params.catid}`, {
+                  credentials: 'include',
                   method: 'GET',
                   headers: {
                     'Content-Type': 'application/json',
                   },
                 })
-                return await response.json()
+                const data = await response.json()
+                console.log(data)
               } catch (error) {
                 console.log(error)
               }
@@ -121,7 +149,8 @@ const router = createBrowserRouter([
               }
 
               try {
-                const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${question_id}`, {
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${question_id}/`, {
+                  credentials: 'include',
                   method: 'GET',
                   headers: {
                     'Content-Type': 'application/json',
@@ -135,24 +164,6 @@ const router = createBrowserRouter([
               } catch (error) {
                 console.log(error)
               }
-
-
-              // try {
-              //   const response = await fetch(`http://127.0.0.1:8000/api/v1/response/${question_id}`, {
-              //     method: 'GET',
-              //     headers: {
-              //       'Content-Type': 'application/json',
-              //     },
-              //   })
-              //   const data = await response.json()
-              //   console.log(data.responses)
-              
-              //   returndata.responses = data.responses
-              // } catch (error) {
-              //   console.log(error)
-              // }
-
-              // return returndata
             },
           },
         ],
