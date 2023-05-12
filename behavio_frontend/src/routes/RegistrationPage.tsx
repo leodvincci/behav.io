@@ -52,7 +52,7 @@ const RegistrationPage: React.FC = () => {
 
       const data = await response.json()
       console.log(data)
-      if (data['042']) {
+      if (data.success) {
         navigate('/login')
       } else {
         console.log('error')
