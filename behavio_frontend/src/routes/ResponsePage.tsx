@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/ui/Header";
 import SettingsImage from "../components/ui/SettingsImage";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
 
 interface QuestionType {
   Category_id: number;
@@ -29,6 +30,9 @@ const ResponsePage: React.FC = () => {
   const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    console.dir(document)
+
+
     const response = {
       response_S: situation,
       response_T: task,
@@ -38,20 +42,21 @@ const ResponsePage: React.FC = () => {
       isPrivate: isPrivate,
     };
 
-    const res = await fetch(
-      `http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`,
-      {
+    const res = await fetch(`http://127.0.0.1:8000/api/v1/response/${questionData.question.id}/`, {
+        credentials: 'include',
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
-          "X-CSRFToken": localStorage.getItem("csrf-token") as string,
+          'X-CSRFToken': `${localStorage.getItem('csrftoken')}`,
         },
         body: JSON.stringify(response),
       }
     );
 
+
+
     const data = await res.json();
+    console.log(data)
 
     if (data.success) {
       console.log("Response Posted");

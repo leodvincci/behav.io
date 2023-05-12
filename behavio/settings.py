@@ -59,7 +59,6 @@ REST_FRAMEWORK = {
     "NON_FIELD_ERRORS_KEY": "errors",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
@@ -161,5 +160,7 @@ CORS_ORIGIN_WHITELIST = [
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",  # replace with your own allowed origins
-    "http://localhost:5173",  # replace with your own allowed origins
+    "http://localhost:5173",
+    "http://127.0.0.1˝",  # replace with your own allowed origins
+    "http://127.0.0.1:5173˝",  # replace with your own allowed origins
 ]

@@ -9,13 +9,11 @@ from rest_framework.permissions import AllowAny
 from django.middleware.csrf import get_token
 from django.contrib.auth import get_user_model
 from django.contrib.sessions.models import Session
-from django.contrib.sessions.backends.db import SessionStore
+from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import *
 import random as randGen
 
 User = get_user_model()
-
-user_session = None  # global variable to store session
 
 
 # Create your views here.
@@ -37,24 +35,14 @@ def registration(request):
     return JsonResponse({"success": True})
 
 
-@api_view(["POST"])
+@api_view(["GET"])
 @permission_classes([AllowAny])
-def set_session_user(request):
-    session_id = request.data["session"]
-    user = authUser(session_id)
-    print("User:", user)
+@ensure_csrf_cookie
+def get_csrf_token(request):
+    csrf_token = request.COOKIES.get("csrftoken")
+    print(f"csrf token: {csrf_token}")
 
-    #
-
-    print("User stored:", user)
-    return JsonResponse({"success": True, "user": model_to_dict(user)})
-
-
-def authUser(session_id):
-    session = Session.objects.get(session_key=session_id)
-    uid = session.get_decoded().get("_auth_user_id")
-    user = User.objects.get(pk=uid)
-    return user
+    return JsonResponse({"csrf": csrf_token})
 
 
 @api_view(["POST"])
@@ -65,22 +53,15 @@ def user_login(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
+        print(request.COOKIES)
 
-        return JsonResponse(
-            {
-                "success": True,
-                # "user": model_to_dict(user),
-                # "tokens": {
-                #     "csrf-token": get_token(request),
-                #     "session": request.session.session_key,
-                # },
-            }
-        )
+        return JsonResponse({"success": True, "sessionid": request.session.session_key})
     else:
         return JsonResponse({"success": False})
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def user_logout(request):
     logout(request)
     return JsonResponse({"success": True})
@@ -117,29 +98,16 @@ def question(request, question_id=None, category_txt=None):
 
 
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def category(request):
     categories = list(Category.objects.all().values())
     print(categories)
     return JsonResponse({"categories": categories})
 
 
-@api_view(["GET"])
-# Returns token and session id
-def tokens(request):
-    return JsonResponse(
-        {
-            "csrf-token": get_token(request),
-            "session": request.session.session_key,
-        }
-    )
-
-
 @api_view(["POST", "PUT", "GET", "DELETE"])
 @permission_classes([AllowAny])
 def response_handling(request, question_id=None, response_id=None):
-    session = SessionStore()
-    session_key = session.session_key
-    print("session_key:", session_key)
     if request.method == "POST":
         try:
             response_S = request.data["response_S"]
@@ -150,7 +118,7 @@ def response_handling(request, question_id=None, response_id=None):
             isPrivate = request.data["isPrivate"]
 
             new_response = Response.objects.create(
-                app_user=User.objects.get(email=user.email),
+                app_user=request.user,
                 question=Question.objects.get(pk=question_id),
                 response_S=response_S,
                 response_T=response_T,
@@ -173,7 +141,9 @@ def response_handling(request, question_id=None, response_id=None):
     if request.method == "PUT":
         try:
             if response_id:
-                response = get_object_or_404(Response, id=response_id, app_user=user)
+                response = get_object_or_404(
+                    Response, id=response_id, app_user=request.user
+                )
                 data = request.data
                 for key, value in data.items():
                     setattr(response, key, value)
@@ -187,13 +157,17 @@ def response_handling(request, question_id=None, response_id=None):
         # GET single response
         print("user 1234:", request.session.session_key)
         if response_id:
-            response = get_object_or_404(Response, id=response_id, app_user=user)
+            response = get_object_or_404(
+                Response, id=response_id, app_user=request.user
+            )
             response_dict = model_to_dict(response)
             return JsonResponse({"response": response_dict})
         # GET all of a user's responses
         else:
             try:
-                responses = list(Response.objects.filter(app_user=user).values())
+                responses = list(
+                    Response.objects.filter(app_user=request.user).values()
+                )
                 return JsonResponse({"responses": responses})
             except Exception as e:
                 print(f"Error: {e}")
@@ -201,7 +175,9 @@ def response_handling(request, question_id=None, response_id=None):
 
     if request.method == "DELETE":
         try:
-            response = get_object_or_404(Response, id=response_id, app_user=user)
+            response = get_object_or_404(
+                Response, id=response_id, app_user=request.user
+            )
             response.delete()
             return JsonResponse({"success": True})
         except Exception as e:
@@ -263,8 +239,6 @@ def feedback_handling(request, response_id, feedback_id=None):
 
 @api_view(["POST", "GET", "DELETE"])
 def favorite_handling(request, question_id, favorite_id=None):
-    user = authUser(request)
-
     # Adds question to "FavoritedQuestion" table for easy access to all favorites, also sets the 'isFavorite' field on the Questions model to True for easy access that way
     if request.method == "POST":
         try:

@@ -46,39 +46,28 @@ const LoginPage: React.FC = () => {
       })
 
       const data = await response.json()
-      console.log(data)
       if (data.success) {
-        localStorage.setItem('session', data.tokens['session'])
-        localStorage.setItem('csrf-token', data.tokens['csrf-token'])
-        localStorage.setItem('isAuthenticated', 'true')
-        localStorage.setItem('user', JSON.stringify(data.user))
-
         try {
-          // Send post request to create a new session
-          const sessionResponse = await fetch('http://127.0.0.1:8000/api/v1/session/', {
+          const response = await fetch('http://127.0.0.1:8000/api/v1/csrf', {
             credentials: 'include',
-            method: 'POST',
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              "X-CSRFToken": localStorage.getItem("csrftoken") as string,
             },
-            body: JSON.stringify({
-              'session': data.tokens['session'],
-            }),
           })
-  
-          const sessionData = await sessionResponse.json()
-          console.log(sessionData)
-          navigate('/dashboard')
+
+          const data = await response.json()
+          
+          if (data.csrf) {
+            localStorage.setItem('csrftoken', data.csrf)
+          }
         } catch (error) {
-          setIsError(true)
-          setErrorMessage('Something went wrong')
+          console.log(error)
         }
 
-      } else {
-        setIsError(true)
-        setErrorMessage('Invalid credentials. Please click on register below to create an account')
+        navigate('/dashboard')
       }
+
     } catch (error) {
       setIsError(true)
       setErrorMessage('Something went wrong')
