@@ -3,7 +3,6 @@ import Header from '../components/ui/Header';
 import SettingsImage from '../components/ui/SettingsImage';
 import { Link } from 'react-router-dom';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
 import QuestionsImage from '../components/ui/QuestionsImage';
 import { ResponseType } from '../types/types';
 
@@ -11,6 +10,23 @@ const ResponsesPage = () => {
   const data = useLoaderData(); // Loads the  data from the loader in main.jsx
   console.log(data);
 
+  const handleDeleteResponse = async (id: number) => {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/v1/response/${id}/`,
+      {
+        credentials: 'include',
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': localStorage.getItem('csrftoken') as string,
+        },
+        body: JSON.stringify({ response_id: id }),
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+  };
   return (
     <>
       <Header />
@@ -70,17 +86,17 @@ const ResponsesPage = () => {
                     View
                   </Link>
                   <Link
-                    to={`/responses/${response.id}/edit`}
+                    to={`/responses/${response.id}`}
                     className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
                   >
                     Edit
                   </Link>
-                  <Link
-                    to={`/responses/${response.id}/delete`}
+                  <button
                     className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
+                    onClick={() => handleDeleteResponse(response.id)}
                   >
                     Delete
-                  </Link>
+                  </button>
                 </div>
 
                 {/* <aside>
