@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Header from '../components/ui/Header';
 import SettingsImage from '../components/ui/SettingsImage';
 import { Link } from 'react-router-dom';
@@ -8,11 +8,11 @@ import { ResponseType } from '../types/types';
 
 const ResponsesPage = () => {
   const data = useLoaderData(); // Loads the  data from the loader in main.jsx
-  console.log(data);
+  const navigate = useNavigate();
 
   const handleDeleteResponse = async (id: number) => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/v1/response/${id}/`,
+      `http://127.0.0.1:8000/api/v1/response/${id}/delete`,
       {
         credentials: 'include',
         method: 'DELETE',
@@ -25,7 +25,9 @@ const ResponsesPage = () => {
     );
 
     const data = await response.json();
-    console.log(data);
+    if (data.success) {
+      navigate('/responses');
+    }
   };
   return (
     <>

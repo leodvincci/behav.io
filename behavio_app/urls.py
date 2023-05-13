@@ -24,10 +24,8 @@ urlpatterns = [
         name="questions_by_category",
     ),
     path("api/v1/categories/", views.category, name="categories"),
-
-    #Response Paths
+    # Response Paths
     path("api/v1/responses/", views.response_handling, name="get_user_responses"),
-
     path(
         "api/v1/response/<int:response_id>/delete",
         views.response_handling,
@@ -38,8 +36,7 @@ urlpatterns = [
         views.response_handling,
         name="create_response",
     ),
-
-    #Feedback Paths
+    # Feedback Paths
     path(
         "api/v1/feedback/<int:response_id>/",
         views.feedback_handling,
