@@ -169,6 +169,7 @@ def response_handling(request, question_id=None, response_id=None):
     if request.method == "GET":
         # GET single response
         print("user 1234:", request.session.session_key)
+        print(response_id)
         if response_id:
             response = get_object_or_404(
                 Response, id=response_id, app_user=request.user
