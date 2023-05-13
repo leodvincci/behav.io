@@ -1,16 +1,13 @@
-import React, { Children } from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
+import React, { Children } from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 import LoginPage from './routes/LoginPage';
 import RegistrationPage from './routes/RegistrationPage';
 import ResponsePage from './routes/ResponsePage';
 import CategoriesPage from './routes/CategoriesPage';
 import NotFound from './routes/NotFoundPage';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './index.css';
 import DashboardPage from './routes/DashboardPage';
 import LogoutPage from './routes/LogoutPage';
 import ProfileSettingsPage from './routes/ProfileSettingsPage';
@@ -18,179 +15,224 @@ import QuestionsPage from './routes/QuestionsPage';
 import QuestionPage from './routes/QuestionPage';
 import LoaderPage from './routes/LoaderPage';
 import ResponsesPage from './routes/ResponsesPage';
+import RandomQuestionPage from './routes/RandomQuestionPage';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     errorElement: <NotFound />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <App />,
       },
       {
-        path: "/login",
+        path: '/login',
         element: <LoginPage />,
       },
       {
-        path: "/registration",
+        path: '/registration',
         element: <RegistrationPage />,
       },
       {
-        path: "/dashboard",
+        path: '/dashboard',
         element: <DashboardPage />,
       },
       {
-        path: "/responses",
+        path: '/responses',
         element: <ResponsesPage />,
-        loader: async ({params}) => {
-          const questionId = params.question_id
-          console.log(questionId)
-          const response = await fetch('http://127.0.0.1:8000/api/v1/responses/', {
-            credentials: 'include',
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          const data = await response.json()
-          console.log(data)
-          return data
-        }
-
-      },
-      {
-        path: "/questions",
-        element: <QuestionsPage />,
-        loader: async () => {
-          const response = await fetch('http://localhost:8000/api/v1/questions', {
-            credentials: 'include',
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': `${localStorage.getItem('csrftoken')}`
-            },
-          })
-          return await response.json()
-        }
-      },
-      {
-        path: "questions/:category_txt",
-        element: <QuestionPage />,
-        loader: async ({params}) => {
-          try {
-            const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${params.category_txt}/`, {
+        loader: async ({ params }) => {
+          const questionId = params.question_id;
+          console.log(questionId);
+          const response = await fetch(
+            'http://127.0.0.1:8000/api/v1/responses/',
+            {
               credentials: 'include',
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
               },
-            })
-            return await response.json()
+            }
+          );
+          const data = await response.json();
+          console.log(data);
+          return data;
+        },
+      },
+      {
+        path: '/questions',
+        element: <QuestionsPage />,
+        loader: async () => {
+          const response = await fetch(
+            'http://localhost:8000/api/v1/questions',
+            {
+              credentials: 'include',
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': `${localStorage.getItem('csrftoken')}`,
+              },
+            }
+          );
+          return await response.json();
+        },
+      },
+      {
+        path: 'questions/:category_txt',
+        element: <QuestionPage />,
+        loader: async ({ params }) => {
+          try {
+            const response = await fetch(
+              `http://127.0.0.1:8000/api/v1/questions/${params.category_txt}/`,
+              {
+                credentials: 'include',
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+            return await response.json();
           } catch (error) {
-            console.log(error)
+            console.log(error);
           }
         },
       },
       {
-        path: "/categories",
+        path: '/categories',
         element: <CategoriesPage />,
-        loader: async ({params}) => {
-          const response = await fetch('http://127.0.0.1:8000/api/v1/categories/', {
-            credentials: 'include',
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': `${localStorage.getItem('csrftoken')}`,
-            },
-          })
-          return await response.json()
+        loader: async ({ params }) => {
+          const response = await fetch(
+            'http://127.0.0.1:8000/api/v1/categories/',
+            {
+              credentials: 'include',
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': `${localStorage.getItem('csrftoken')}`,
+              },
+            }
+          );
+          return await response.json();
         },
         children: [
           {
-            path: ":catid",
+            path: ':catid',
             element: <QuestionPage />,
-            loader: async ({params}) => {
+            loader: async ({ params }) => {
               try {
-                const response = await fetch(`http://127.0.0.1:8000/api/v1/categories/${params.catid}`, {
-                  credentials: 'include',
-                  method: 'GET',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                })
-                const data = await response.json()
-                console.log(data)
+                const response = await fetch(
+                  `http://127.0.0.1:8000/api/v1/categories/${params.catid}`,
+                  {
+                    credentials: 'include',
+                    method: 'GET',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  }
+                );
+                const data = await response.json();
+                console.log(data);
               } catch (error) {
-                console.log(error)
+                console.log(error);
               }
             },
           },
           {
-            path: "*",
+            path: '*',
             element: <NotFound />,
-          }
+          },
         ],
       },
       {
-        path: "/logout",
+        path: '/logout',
         element: <LogoutPage />,
       },
       {
-        path: "/loading",
+        path: '/loading',
         element: <LoaderPage />,
       },
       {
-        path: "/profile-settings",
+        path: '/profile-settings',
         element: <ProfileSettingsPage />,
       },
       {
-        path: "/response",
+        path: '/response',
         errorElement: <NotFound />,
         children: [
           {
-            path: ":question_id",
+            path: ':question_id',
             element: <ResponsePage />,
-            loader: async ({params}) => {
-              console.log(params)
-              const { question_id } = params
+            loader: async ({ params }) => {
+              console.log(params);
+              const { question_id } = params;
 
               const returndata = {
                 question: {},
                 responses: [],
-              }
+              };
 
               try {
-                const response = await fetch(`http://127.0.0.1:8000/api/v1/questions/${question_id}/`, {
-                  credentials: 'include',
-                  method: 'GET',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                })
-                const data = await response.json()
-                console.log(data.questions[0])
-                returndata.question = data.questions[0]
+                const response = await fetch(
+                  `http://127.0.0.1:8000/api/v1/questions/${question_id}/`,
+                  {
+                    credentials: 'include',
+                    method: 'GET',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  }
+                );
+                const data = await response.json();
+                console.log(data.questions[0]);
+                returndata.question = data.questions[0];
 
-                return returndata
+                return returndata;
               } catch (error) {
-                console.log(error)
+                console.log(error);
               }
             },
           },
         ],
       },
       {
-        path: "*",
+        path: '/random',
+        element: <RandomQuestionPage />,
+        loader: async ({ params }) => {
+          try {
+            const response = await fetch(
+              `http://127.0.0.1:8000/api/v1/question/random`,
+              {
+                credentials: 'include',
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+            const data = await response.json();
+            if (data.question) {
+              return data.question;
+            } else {
+              return 'No questions found';
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      },
+      {
+        path: '*',
         element: <NotFound />,
-      }, 
+      },
     ],
   },
 ]);
 
-
-ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment).render(
+ReactDOM.createRoot(
+  document.getElementById('root') as Element | DocumentFragment
+).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </React.StrictMode>
-)
+);

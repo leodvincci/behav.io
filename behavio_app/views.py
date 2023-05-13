@@ -139,7 +139,7 @@ def response_handling(request, question_id=None, response_id=None):
                 vid_link=vid_link,
                 isPrivate=isPrivate,
                 feedbackCounter=0,
-                question_text = Question.objects.get(pk=question_id).question_text
+                question_text=Question.objects.get(pk=question_id).question_text,
             )
 
             print(new_response)
@@ -312,11 +312,12 @@ def random(request):
     rand_question = Question.objects.filter(pk=random_number)
     return JsonResponse({"question": model_to_dict(rand_question.get())})
 
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def auto_feedback(request, response_id):
     try:
-        response  = Response.objects.get(pk=response_id)
+        response = Response.objects.get(pk=response_id)
         gpt_input = {
             "situation": response.response_S,
             "task": response.response_T,
@@ -324,19 +325,16 @@ def auto_feedback(request, response_id):
             "result": response.response_R,
             "question": response.question_text,
         }
-        
+
         gpt_feedback = generate_feedback(gpt_input)
-        
+
         Feedback.objects.create(
-            response = response,
-            feedback_text = gpt_feedback,
+            response=response,
+            feedback_text=gpt_feedback,
         )
-        
+
         return JsonResponse({"success": True})
-    
+
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({"success": False})
-
-        
-        
