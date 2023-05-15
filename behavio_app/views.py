@@ -2,6 +2,7 @@ from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
@@ -252,6 +253,7 @@ def feedback_handling(request, response_id, feedback_id=None):
 
 
 @api_view(["POST", "GET", "DELETE"])
+@permission_classes([AllowAny])
 def favorite_handling(request, question_id, favorite_id=None):
     # Adds question to "FavoritedQuestion" table for easy access to all favorites, also sets the 'isFavorite' field on the Questions model to True for easy access that way
     if request.method == "POST":
@@ -259,13 +261,13 @@ def favorite_handling(request, question_id, favorite_id=None):
             question = get_object_or_404(Question, id=question_id)
 
             # Fix from response_handling applied here as well
-            auth = request.data["auth"]
-            session = Session.objects.get(session_key=auth)
-            uid = session.get_decoded().get("_auth_user_id")
-            user = User.objects.get(pk=uid)
+            # auth = request.data["auth"]
+            # session = Session.objects.get(session_key=auth)
+            # uid = session.get_decoded().get("_auth_user_id")
+            # user = User.objects.get(pk=uid)
 
             new_favorite = FavoritedQuestion.objects.create(
-                app_user=User.objects.get(email=user),
+                app_user=request.user,
                 question=Question.objects.get(pk=question_id),
             )
 
