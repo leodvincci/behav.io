@@ -67,4 +67,9 @@ urlpatterns = [
         views.favorite_handling,
         name="delete_favorite",
     ),
+    path(
+        "api/v1/profile/<int:user_id>/",
+        views.profile_responses,
+        name="profile_responses"
+    )
 ]

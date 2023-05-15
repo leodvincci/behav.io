@@ -345,3 +345,19 @@ def auto_feedback(request, response_id):
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({"success": False})
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def profile_responses(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        responses = list(
+                    Response.objects.filter(app_user=user, isPrivate=False)
+                    .order_by("-id")
+                    .values()
+                )
+        return JsonResponse({"responses": responses})
+    except Exception as e:
+        print(f"Error: {e}")
+        return JsonResponse({"responses": []})
