@@ -29,6 +29,21 @@ const ResponsesPage = () => {
       navigate('/responses');
     }
   };
+
+  const handleAutoFeedback = async (id: number) => {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/v1/auto_feedback/${id}/`,
+      {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': localStorage.getItem('csrftoken') as string,
+        },
+        body: JSON.stringify({ response_id: id }),
+      }
+    );
+  };
   return (
     <>
       <Header />
@@ -98,6 +113,12 @@ const ResponsesPage = () => {
                     onClick={() => handleDeleteResponse(response.id)}
                   >
                     Delete
+                  </button>
+                  <button
+                    className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
+                    onClick={() => handleAutoFeedback(response.id)}
+                  >
+                    Auto Feedback
                   </button>
                 </div>
 
