@@ -103,7 +103,7 @@ def question(request, question_id=None, category_txt=None):
             return JsonResponse({"success": False})
     else:
         try:
-            questions = list(Question.objects.all().values())
+            questions = list(Question.objects.all().values().order_by("-isFavorite"))
             return JsonResponse({"questions": questions})
         except Exception as e:
             print(f"Error: {e}")
@@ -181,7 +181,9 @@ def response_handling(request, question_id=None, response_id=None):
         else:
             try:
                 responses = list(
-                    Response.objects.filter(app_user=request.user).values()
+                    Response.objects.filter(app_user=request.user)
+                    .order_by("-id")
+                    .values()
                 )
                 return JsonResponse({"responses": responses})
             except Exception as e:
@@ -201,6 +203,7 @@ def response_handling(request, question_id=None, response_id=None):
 
 
 @api_view(["POST", "GET", "DELETE"])
+@permission_classes([AllowAny])
 def feedback_handling(request, response_id, feedback_id=None):
     if request.method == "POST":
         try:

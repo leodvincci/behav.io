@@ -6,12 +6,11 @@ import { BsHeart, BsHeartFill } from 'react-icons/bs';
 
 const FavoriteQuestionsPage: React.FC = () => {
   const data = useLoaderData(); // Loads the  data from the loader in main.jsx
-  // const { id, question_text, category_id, is_favorite } = data.questions;
-  const [isFavorite, setIsFavorite] = useState(false);
+  console.log(data);
+  const [isFavorite, setIsFavorite] = useState(true);
   const navigate = useNavigate();
 
   const handleFavoriteQuestion = async (id: string) => {
-    console.log('clicked');
     setIsFavorite(!isFavorite);
     const response = await fetch(
       `http://127.0.0.1:8000/api/v1/favorite/${id}/`,
@@ -47,7 +46,7 @@ const FavoriteQuestionsPage: React.FC = () => {
           </div>
         </section>
         <section className="grid grid-cols-1 bg-primary-dark rounded-xl w-full p-10 text-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-          {/* {data.favorites.map((favorite: any) => {
+          {data.favorites.map((favorite: any) => {
             return (
               <div
                 key={favorite.id}
@@ -64,7 +63,7 @@ const FavoriteQuestionsPage: React.FC = () => {
                 </div>
               </div>
             );
-          })} */}
+          })}
         </section>
       </main>
     </>
