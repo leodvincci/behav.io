@@ -16,6 +16,7 @@ import QuestionPage from './routes/QuestionPage';
 import LoaderPage from './routes/LoaderPage';
 import ResponsesPage from './routes/ResponsesPage';
 import RandomQuestionPage from './routes/RandomQuestionPage';
+import FavoriteQuestionsPage from './routes/FavoriteQuestionsPage';
 
 const router = createBrowserRouter([
   {
@@ -201,7 +202,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           try {
             const response = await fetch(
-              `http://127.0.0.1:8000/api/v1/question/random`,
+              `http://127.0.0.1:8000/api/v1/question/random/`,
               {
                 credentials: 'include',
                 method: 'GET',
@@ -219,6 +220,35 @@ const router = createBrowserRouter([
           } catch (error) {
             console.log(error);
           }
+        },
+      },
+      {
+        path: '/favorite-questions',
+        element: <FavoriteQuestionsPage />,
+        loader: async ({ params }) => {
+          try {
+            const response = await fetch(
+              `http://127.0.0.1:8000/api/v1/favorites/`,
+              {
+                credentials: 'include',
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+            const data = await response.json();
+            console.log(data);
+            if (data.favorites) {
+              return data.favorites;
+            }
+          } catch (error) {
+            console.log(error);
+          }
+
+          return {
+            favorites: [],
+          };
         },
       },
       {

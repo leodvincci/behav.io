@@ -103,7 +103,7 @@ def question(request, question_id=None, category_txt=None):
             return JsonResponse({"success": False})
     else:
         try:
-            questions = list(Question.objects.all().values())
+            questions = list(Question.objects.all().values().order_by("-isFavorite"))
             return JsonResponse({"questions": questions})
         except Exception as e:
             print(f"Error: {e}")
@@ -181,7 +181,9 @@ def response_handling(request, question_id=None, response_id=None):
         else:
             try:
                 responses = list(
-                    Response.objects.filter(app_user=request.user).values()
+                    Response.objects.filter(app_user=request.user)
+                    .order_by("-id")
+                    .values()
                 )
                 return JsonResponse({"responses": responses})
             except Exception as e:
@@ -201,6 +203,7 @@ def response_handling(request, question_id=None, response_id=None):
 
 
 @api_view(["POST", "GET", "DELETE"])
+@permission_classes([AllowAny])
 def feedback_handling(request, response_id, feedback_id=None):
     if request.method == "POST":
         try:
@@ -254,7 +257,7 @@ def feedback_handling(request, response_id, feedback_id=None):
 
 @api_view(["POST", "GET", "DELETE"])
 @permission_classes([AllowAny])
-def favorite_handling(request, question_id, favorite_id=None):
+def favorite_handling(request, question_id=None, favorite_id=None):
     # Adds question to "FavoritedQuestion" table for easy access to all favorites, also sets the 'isFavorite' field on the Questions model to True for easy access that way
     if request.method == "POST":
         try:
@@ -285,8 +288,9 @@ def favorite_handling(request, question_id, favorite_id=None):
     # GET's all favorites
     if request.method == "GET":
         try:
-            favorites = list(FavoritedQuestion.objects.filter(app_user=user).values())
-
+            favorites = list(
+                FavoritedQuestion.objects.filter(app_user=request.user).values("id", "question__question_text")
+            )
             return JsonResponse({"favorites": favorites})
         except Exception as e:
             print(f"Error: {e}")
@@ -296,7 +300,7 @@ def favorite_handling(request, question_id, favorite_id=None):
     if request.method == "DELETE":
         try:
             favorite = get_object_or_404(
-                FavoritedQuestion, id=favorite_id, app_user=user
+                FavoritedQuestion, id=favorite_id, app_user=request.user
             )
             question = get_object_or_404(Question, id=favorite.question)
             favorite.delete()
@@ -341,3 +345,19 @@ def auto_feedback(request, response_id):
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({"success": False})
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def profile_responses(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        responses = list(
+                    Response.objects.filter(app_user=user, isPrivate=False)
+                    .order_by("-id")
+                    .values()
+                )
+        return JsonResponse({"responses": responses})
+    except Exception as e:
+        print(f"Error: {e}")
+        return JsonResponse({"responses": []})

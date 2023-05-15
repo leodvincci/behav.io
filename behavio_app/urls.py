@@ -14,7 +14,7 @@ urlpatterns = [
         name="questions_by_question_id",
     ),
     path(
-        "api/v1/question/random",
+        "api/v1/question/random/",
         views.random,
         name="questions_random",
     ),
@@ -43,7 +43,7 @@ urlpatterns = [
         name="create_or_get_feedback",
     ),
     path(
-        "api/v1/feedback/<int:feedback_id>",
+        "api/v1/feedback/<int:feedback_id>/",
         views.feedback_handling,
         name="delete_feedback",
     ),
@@ -67,4 +67,9 @@ urlpatterns = [
         views.favorite_handling,
         name="delete_favorite",
     ),
+    path(
+        "api/v1/profile/<int:user_id>/",
+        views.profile_responses,
+        name="profile_responses"
+    )
 ]

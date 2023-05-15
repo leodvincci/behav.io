@@ -40,7 +40,6 @@ class Response(models.Model):
     feedbackCounter = models.IntegerField(default=0)
     question_text = models.CharField(blank=True, null=True)
 
-
     def __str__(self):
         return f"{self.app_user.first_name}: Q:{self.question_id}. Situation: {self.response_S}, Task: {self.response_T}, Action: {self.response_A}, Result: {self.response_R}"
 
