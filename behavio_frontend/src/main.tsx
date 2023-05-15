@@ -202,7 +202,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           try {
             const response = await fetch(
-              `http://127.0.0.1:8000/api/v1/question/random`,
+              `http://127.0.0.1:8000/api/v1/question/random/`,
               {
                 credentials: 'include',
                 method: 'GET',
@@ -228,7 +228,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           try {
             const response = await fetch(
-              `http://127.0.0.1:8000/api/v1/favorites`,
+              `http://127.0.0.1:8000/api/v1/favorites/`,
               {
                 credentials: 'include',
                 method: 'GET',

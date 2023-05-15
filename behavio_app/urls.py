@@ -14,7 +14,7 @@ urlpatterns = [
         name="questions_by_question_id",
     ),
     path(
-        "api/v1/question/random",
+        "api/v1/question/random/",
         views.random,
         name="questions_random",
     ),
