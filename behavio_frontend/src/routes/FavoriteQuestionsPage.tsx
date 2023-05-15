@@ -46,14 +46,22 @@ const FavoriteQuestionsPage: React.FC = () => {
           </div>
         </section>
         <section className="grid grid-cols-1 bg-primary-dark rounded-xl w-full p-10 text-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-          {data.favorites.map((favorite: any) => {
+          {data.map((favorite: any) => {
             return (
               <div
                 key={favorite.id}
                 className="p-10 bg-primary-light text-secondary-dark uppercase rounded-xl bg-opacity-90 flex flex-col justify-between items-center gap-10 tracking-widest"
               >
-                <h3 className="card-title">{favorite}</h3>
+                <h3 className="card-title">
+                  {favorite.question__question_text}
+                </h3>
                 <div className="flex">
+                  <Link
+                    to={`/response/${favorite.id}`}
+                    className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
+                  >
+                    Answer
+                  </Link>
                   <aside
                     onClick={() => handleFavoriteQuestion(favorite.id)}
                     className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"

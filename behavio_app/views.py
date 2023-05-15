@@ -289,7 +289,9 @@ def favorite_handling(request, question_id=None, favorite_id=None):
     if request.method == "GET":
         try:
             favorites = list(
-                FavoritedQuestion.objects.filter(app_user=request.user).values("id", "question__question_text")
+                FavoritedQuestion.objects.filter(app_user=request.user).values(
+                    "id", "question__question_text"
+                )
             )
             return JsonResponse({"favorites": favorites})
         except Exception as e:
@@ -353,10 +355,10 @@ def profile_responses(request, user_id):
     try:
         user = User.objects.get(id=user_id)
         responses = list(
-                    Response.objects.filter(app_user=user, isPrivate=False)
-                    .order_by("-id")
-                    .values()
-                )
+            Response.objects.filter(app_user=user, isPrivate=False)
+            .order_by("-id")
+            .values()
+        )
         return JsonResponse({"responses": responses})
     except Exception as e:
         print(f"Error: {e}")
