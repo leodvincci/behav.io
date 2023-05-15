@@ -253,6 +253,7 @@ def feedback_handling(request, response_id, feedback_id=None):
 
 
 @api_view(["POST", "GET", "DELETE"])
+@permission_classes([AllowAny])
 def favorite_handling(request, question_id, favorite_id=None):
     # Adds question to "FavoritedQuestion" table for easy access to all favorites, also sets the 'isFavorite' field on the Questions model to True for easy access that way
     if request.method == "POST":
