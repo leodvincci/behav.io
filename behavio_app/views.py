@@ -261,13 +261,13 @@ def favorite_handling(request, question_id, favorite_id=None):
             question = get_object_or_404(Question, id=question_id)
 
             # Fix from response_handling applied here as well
-            auth = request.data["auth"]
-            session = Session.objects.get(session_key=auth)
-            uid = session.get_decoded().get("_auth_user_id")
-            user = User.objects.get(pk=uid)
+            # auth = request.data["auth"]
+            # session = Session.objects.get(session_key=auth)
+            # uid = session.get_decoded().get("_auth_user_id")
+            # user = User.objects.get(pk=uid)
 
             new_favorite = FavoritedQuestion.objects.create(
-                app_user=User.objects.get(email=user),
+                app_user=request.user,
                 question=Question.objects.get(pk=question_id),
             )
 

@@ -5,28 +5,37 @@ import { Link } from 'react-router-dom';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import QuestionsImage from '../components/ui/QuestionsImage';
+import { useNavigate } from 'react-router-dom';
 
 const QuestionsPage = () => {
   const data = useLoaderData(); // Loads the  data from the loader in main.jsx
   const { id, question_text, category_id, is_favorite } = data.questions;
   const [isFavorite, setIsFavorite] = useState(is_favorite);
+  const navigate = useNavigate();
+
   const handleFavoriteQuestion = async (id: string) => {
     console.log('clicked');
     setIsFavorite(!isFavorite);
     const response = await fetch(
       `http://127.0.0.1:8000/api/v1/favorite/${id}/`,
       {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRFToken': `${localStorage.getItem('csrftoken')}}`,
+          'X-CSRFToken': localStorage.getItem('csrftoken') as string,
         },
         body: JSON.stringify({ isFavorite }),
       }
     );
-
+    console.log(localStorage.getItem('csrftoken'));
     const data = await response.json();
-    console.log(data);
+
+    if (data.success) {
+      navigate('/questions');
+    } else {
+      console.log('error');
+    }
   };
 
   return (
