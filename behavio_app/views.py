@@ -285,8 +285,9 @@ def favorite_handling(request, question_id, favorite_id=None):
     # GET's all favorites
     if request.method == "GET":
         try:
-            favorites = list(FavoritedQuestion.objects.filter(app_user=user).values())
-
+            favorites = list(
+                FavoritedQuestion.objects.filter(app_user=request.user).values()
+            )
             return JsonResponse({"favorites": favorites})
         except Exception as e:
             print(f"Error: {e}")
@@ -296,7 +297,7 @@ def favorite_handling(request, question_id, favorite_id=None):
     if request.method == "DELETE":
         try:
             favorite = get_object_or_404(
-                FavoritedQuestion, id=favorite_id, app_user=user
+                FavoritedQuestion, id=favorite_id, app_user=request.user
             )
             question = get_object_or_404(Question, id=favorite.question)
             favorite.delete()

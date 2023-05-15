@@ -43,7 +43,7 @@ urlpatterns = [
         name="create_or_get_feedback",
     ),
     path(
-        "api/v1/feedback/<int:feedback_id>",
+        "api/v1/feedback/<int:feedback_id>/",
         views.feedback_handling,
         name="delete_feedback",
     ),
