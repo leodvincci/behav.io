@@ -2,6 +2,7 @@ from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
