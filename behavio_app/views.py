@@ -289,7 +289,7 @@ def favorite_handling(request, question_id=None, favorite_id=None):
     if request.method == "GET":
         try:
             favorites = list(
-                FavoritedQuestion.objects.filter(app_user=request.user).values()
+                FavoritedQuestion.objects.filter(app_user=request.user).values("id", "question__question_text")
             )
             return JsonResponse({"favorites": favorites})
         except Exception as e:
