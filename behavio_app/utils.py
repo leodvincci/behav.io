@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-openai.api_key = os.environ['api_key']
+openai.api_key = os.environ["api_key"]
 
 
 def generate_feedback(gpt_input):
@@ -24,6 +24,6 @@ def generate_feedback(gpt_input):
     response = openai.Completion.create(
         engine="text-davinci-003", prompt=prompt, temperature=0.3, max_tokens=300
     )
-
+    print(f"AI: ", response.choices[0])
     # We return the first generated text
     return response.choices[0].text.strip()

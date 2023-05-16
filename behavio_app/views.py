@@ -389,7 +389,12 @@ def auto_feedback(request, response_id):
             feedback_text=gpt_feedback,
         )
 
-        return JsonResponse({"success": True})
+        if gpt_feedback:
+            return JsonResponse(
+                {"success": True, "feedback": gpt_feedback, "grade": "A"}
+            )
+
+        return JsonResponse({"success": False})
 
     except Exception as e:
         print(f"Error: {e}")
