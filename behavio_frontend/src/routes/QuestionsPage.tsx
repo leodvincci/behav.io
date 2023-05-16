@@ -6,35 +6,40 @@ import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import QuestionsImage from '../components/ui/QuestionsImage';
 import { useNavigate } from 'react-router-dom';
+import { QuestionType } from '../types/types';
 
 const QuestionsPage = () => {
   const data = useLoaderData(); // Loads the  data from the loader in main.jsx
-  const { id, question_text, category_id, is_favorite } = data.questions;
-  const [isFavorite, setIsFavorite] = useState(is_favorite);
+  console.log(data);
   const navigate = useNavigate();
 
-  const handleFavoriteQuestion = async (id: string) => {
-    console.log('clicked');
-    setIsFavorite(!isFavorite);
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/v1/favorite/${id}/`,
-      {
-        credentials: 'include',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': localStorage.getItem('csrftoken') as string,
-        },
-        body: JSON.stringify({ isFavorite }),
-      }
-    );
-    console.log(localStorage.getItem('csrftoken'));
-    const data = await response.json();
-
-    if (data.success) {
-      navigate('/questions');
+  const handleFavoriteQuestion = async (id: number, isFavorite: boolean) => {
+    if (isFavorite) {
+      navigate('/favorite-questions');
     } else {
-      console.log('error');
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/v1/favorite/${id}/`,
+          {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': localStorage.getItem('csrftoken') as string,
+            },
+            body: JSON.stringify({ isFavorite: true }),
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+          navigate('/questions');
+        } else {
+          console.log('error');
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -51,7 +56,7 @@ const QuestionsPage = () => {
           </div>
         </section>
         <section className="grid grid-cols-1 bg-primary-dark rounded-xl w-full p-10 text-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-          {data.questions.map((question: any) => {
+          {data.questions.map((question: QuestionType) => {
             return (
               <div
                 key={question.id}
@@ -66,7 +71,9 @@ const QuestionsPage = () => {
                     Answer
                   </Link>
                   <aside
-                    onClick={() => handleFavoriteQuestion(question.id)}
+                    onClick={() =>
+                      handleFavoriteQuestion(question.id, question.isFavorite)
+                    }
                     className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
                   >
                     {question.isFavorite ? <BsHeartFill /> : <BsHeart />}

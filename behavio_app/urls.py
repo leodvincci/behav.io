@@ -9,7 +9,12 @@ urlpatterns = [
     path("api/v1/logout/", views.user_logout, name="user_logout"),
     path("api/v1/questions", views.question, name="questions"),
     path(
-        "api/v1/questions/<int:question_id>/",
+        "api/v1/questions/<int:question_id>/update/",
+        views.update_question,
+        name="update_question",
+    ),
+    path(
+        "api/v1/questions/<int:question_id>",
         views.question,
         name="questions_by_question_id",
     ),
@@ -58,18 +63,18 @@ urlpatterns = [
         name="get_favorites",
     ),
     path(
+        "api/v1/favorite/<int:favorite_id>/delete/",
+        views.favorite_handling,
+        name="delete_favorite",
+    ),
+    path(
         "api/v1/favorite/<int:question_id>/",
         views.favorite_handling,
         name="create_favorite",
     ),
     path(
-        "api/v1/favorite/<int:favorite_id>/",
-        views.favorite_handling,
-        name="delete_favorite",
-    ),
-    path(
         "api/v1/profile/<int:user_id>/",
         views.profile_responses,
-        name="profile_responses"
-    )
+        name="profile_responses",
+    ),
 ]

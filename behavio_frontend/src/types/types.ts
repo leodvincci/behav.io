@@ -12,6 +12,16 @@ export interface ResponseType {
   question_text: string;
 }
 
+export interface ResponseLoaderType {
+  question: {
+    category_id: number;
+    id: number;
+    isFavorite: boolean;
+    question_text: string;
+  };
+  responses: ResponseType[];
+}
+
 export interface ResponseFormType {
   response_S: string;
   response_T: string;
@@ -53,5 +63,22 @@ export interface RandomQuestionType {
     id: number;
     category: string;
     isFavorite: boolean;
+  };
+}
+
+export interface FavoriteQuestionType {
+  success: boolean;
+  question: QuestionType;
+  favorites: QuestionType;
+}
+
+export interface FavoriteQuestionLoaderType {
+  success: boolean;
+  questions: {
+    id: number;
+    app_user_id: number;
+    question_id: number;
+    isFavorite: boolean;
+    question_text: string;
   };
 }

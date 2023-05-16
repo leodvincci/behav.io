@@ -2,15 +2,16 @@ import { useState } from 'react';
 import Header from '../components/ui/Header';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import ResponseForm from '../components/ResponseForm';
-import { QuestionType, ResponseType } from '../types/types';
+import { QuestionType, ResponseLoaderType, ResponseType } from '../types/types';
 
 const ResponsePage: React.FC = () => {
-  const questionData = useLoaderData() as ResponseType;
+  const questionData = useLoaderData() as ResponseLoaderType;
+  console.log(questionData);
   const [questionText, setQuestionText] = useState<string>(
-    questionData.question.question_text
+    questionData.question[0].question_text
   );
   const [questionId, setQuestionId] = useState<number>(
-    questionData.question.id
+    questionData.question[0].id
   );
 
   return (
