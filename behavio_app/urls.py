@@ -58,7 +58,7 @@ urlpatterns = [
         name="auto_feedback",
     ),
     path(
-        "api/v1/favorites",
+        "api/v1/favorites/",
         views.favorite_handling,
         name="get_favorites",
     ),

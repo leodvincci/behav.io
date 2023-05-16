@@ -337,27 +337,28 @@ def favorite_handling(request, question_id=None, favorite_id=None):
             favorite = get_object_or_404(
                 FavoritedQuestion, id=favorite_id, app_user=request.user
             )
-            question = get_object_or_404(Question, id=favorite.question)
+            question = get_object_or_404(Question, id=favorite.question.id)
             favorite.delete()
             question.isFavorite = False
             question.save()
+            return JsonResponse({"success": True})
 
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({"success": False})
 
     # PATCH's favorite, changes the isFavorite value on the question model
-    if request.method == "PATCH":
-        try:
-            question = get_object_or_404(Question, id=question_id)
-            question.isFavorite = not question.isFavorite
-            question.save()
+    # if request.method == "PATCH":
+    #     try:
+    #         question = get_object_or_404(Question, id=question_id)
+    #         question.isFavorite = not question.isFavorite
+    #         question.save()
 
-            return JsonResponse({"success": True})
+    #         return JsonResponse({"success": True})
 
-        except Exception as e:
-            print(f"Error: {e}")
-            return JsonResponse({"success": False})
+    #     except Exception as e:
+    #         print(f"Error: {e}")
+    #         return JsonResponse({"success": False})
 
 
 @api_view(["GET"])

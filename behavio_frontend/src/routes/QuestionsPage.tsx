@@ -13,31 +13,9 @@ const QuestionsPage = () => {
   console.log(data);
   const navigate = useNavigate();
 
-  // useEffect(() => {});
-
   const handleFavoriteQuestion = async (id: number, isFavorite: boolean) => {
     if (isFavorite) {
-      try {
-        const response = await fetch(
-          `http://127.0.0.1:8000/api/v1/favorite/${id}/`,
-          {
-            credentials: 'include',
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': localStorage.getItem('csrftoken') as string,
-            },
-            body: JSON.stringify({ isFavorite: false }),
-          }
-        );
-        const data = await response.json();
-        console.log(data);
-        if (data.success) {
-          navigate('/questions');
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      navigate('/favorite-questions');
     } else {
       try {
         const response = await fetch(

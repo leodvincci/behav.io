@@ -8,29 +8,28 @@ import { useState } from 'react';
 const FavoriteQuestionsPage: React.FC = () => {
   const loaderData = useLoaderData() as FavoriteQuestionLoaderType;
   console.log('loader:', loaderData);
-  const [isFavorite, setIsFavorite] = useState(true);
   const navigate = useNavigate();
 
   const handleFavoriteQuestion = async (id: number) => {
+    console.log(id);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/favorite/${id}/`,
+        `http://127.0.0.1:8000/api/v1/favorite/${id}/delete/`,
         {
           credentials: 'include',
-          method: 'POST',
+          method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': localStorage.getItem('csrftoken') as string,
           },
-          body: JSON.stringify({
-            isFavorite: !loaderData.questions.isFavorite,
-          }),
+          body: JSON.stringify({}),
         }
       );
       const data = await response.json();
       console.log(data);
       if (data.success) {
-        navigate('/questions');
+        navigate('/favorite-questions');
+        // window.location.reload();
       } else {
         console.log('error');
       }
@@ -66,6 +65,7 @@ const FavoriteQuestionsPage: React.FC = () => {
                     Answer
                   </Link>
                   <button
+                    // NEED the favorite.id if DELETE method on favorite_handling
                     onClick={() => handleFavoriteQuestion(question.id)}
                     className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
                   >
