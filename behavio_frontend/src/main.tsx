@@ -71,11 +71,12 @@ const router = createBrowserRouter([
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': `${localStorage.getItem('csrftoken')}`,
               },
             }
           );
-          return await response.json();
+          const data = await response.json();
+          console.log(data);
+          return data;
         },
       },
       {
@@ -175,7 +176,7 @@ const router = createBrowserRouter([
 
               try {
                 const response = await fetch(
-                  `http://127.0.0.1:8000/api/v1/questions/${question_id}/`,
+                  `http://127.0.0.1:8000/api/v1/questions/${question_id}`,
                   {
                     credentials: 'include',
                     method: 'GET',
@@ -185,8 +186,8 @@ const router = createBrowserRouter([
                   }
                 );
                 const data = await response.json();
-                console.log(data.questions[0]);
-                returndata.question = data.questions[0];
+                returndata.question = data.questions;
+                console.log(returndata);
 
                 return returndata;
               } catch (error) {
@@ -225,30 +226,20 @@ const router = createBrowserRouter([
       {
         path: '/favorite-questions',
         element: <FavoriteQuestionsPage />,
-        loader: async ({ params }) => {
-          try {
-            const response = await fetch(
-              `http://127.0.0.1:8000/api/v1/favorites/`,
-              {
-                credentials: 'include',
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              }
-            );
-            const data = await response.json();
-            console.log(data);
-            if (data.favorites) {
-              return data.favorites;
+        loader: async () => {
+          const response = await fetch(
+            'http://127.0.0.1:8000/api/v1/favorites/',
+            {
+              credentials: 'include',
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
             }
-          } catch (error) {
-            console.log(error);
-          }
-
-          return {
-            favorites: [],
-          };
+          );
+          const data = await response.json();
+          console.log(data);
+          return data;
         },
       },
       {
