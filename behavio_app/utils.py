@@ -10,16 +10,18 @@ openai.api_key = os.environ["api_key"]
 def generate_feedback(gpt_input):
     # Prompt taking in the input from user's response. Feel free to tweak as you see fit, this is just the first pass.
     prompt = (
-        "As an AI Interview Coach, I've been asked to provide feedback on a candidate's response using the STAR method. "
+        "As an AI Interview Coach, you're being tasked with providing feedback on a candidate's response using the STAR method. "
+        "Here is the candidate's name: {user}\n\n"
         "Here is the candidate's response:\n\n"
         "Question: {question}\n\n"
         "Situation: {situation}\n\n"
         "Task: {task}\n\n"
         "Action: {action}\n\n"
         "Result: {result}\n\n"
-        "Please provide detailed feedback and suggestions for improvement, keeping in mind to address any areas where the response is incomplete or incoherent. "
+        "Please provide detailed feedback and suggestions for improvement, keeping in mind to address any areas where the response is incomplete. "
         "Grade the response from A to F, where A represents a perfect response and F indicates that almost everything needs to be changed. "
         "Begin your feedback with the grade in this format: 'Grade: x'. "
+        "The output should be phrased as if talking directly to the candidate."
         "Maintain proper grammatical formatting in your feedback, but avoid using 'new line' formatting. "
         "End your feedback with the signature -GPT Coach. Stick to this structure in your response."
     ).format(**gpt_input)
