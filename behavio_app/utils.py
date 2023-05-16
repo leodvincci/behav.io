@@ -22,7 +22,6 @@ def generate_feedback(gpt_input):
         "Begin your feedback with the grade in this format: 'Grade: x'. "
         "Maintain proper grammatical formatting in your feedback, but avoid using 'new line' formatting. "
         "End your feedback with the signature -GPT Coach. Stick to this structure in your response."
-
     ).format(**gpt_input)
 
     # using GPT 3.5's 'davinci' engine for more long form text responses. max length of 300 'tokens'. We can adjust that if the reponses are being to short or get cut off or something.
