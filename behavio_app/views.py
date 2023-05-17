@@ -388,6 +388,7 @@ def auto_feedback(request, response_id):
     try:
         response = Response.objects.get(pk=response_id)
         gpt_input = {
+            "user": request.user.first_name,
             "situation": response.response_S,
             "task": response.response_T,
             "action": response.response_A,
