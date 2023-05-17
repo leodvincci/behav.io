@@ -6,10 +6,10 @@ const FeedbackPage = () => {
   return (
     <>
       <Header />
-      <main className="min-h-fit py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
+      <main className="min-h-fit h-screen py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3">
         <section>
           <div className="flex flex-col justify-center items-center md:flex-row gap-20 md:gap-20 my-10">
-            <h1 className="text-5xl lg:text-6xl text-offBlue">Feedback</h1>
+            <h1 className="text-5xl lg:text-6xl text-offBlue">All Feedback</h1>
             <SettingsImage width={250} />
           </div>
         </section>
