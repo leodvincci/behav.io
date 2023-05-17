@@ -7,6 +7,7 @@ import QuestionsImage from '../components/ui/QuestionsImage';
 import { ResponseType } from '../types/types';
 import { useState } from 'react';
 import FindingDataImage from '../components/ui/FindingDataImage';
+import YouTubeEmbed from '../components/YouTubeEmbed';
 
 const ResponsesPage = () => {
   const data = useLoaderData(); // Loads the  data from the loader in main.jsx
@@ -43,7 +44,7 @@ const ResponsesPage = () => {
     console.log(responseId);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/auto_feedback/${responseId}/`,
+        // `http://127.0.0.1:8000/api/v1/auto_feedback/${responseId}/`,
         {
           credentials: 'include',
           method: 'POST',
@@ -84,7 +85,7 @@ const ResponsesPage = () => {
           </div>
         </section>
 
-        <section className="grid grid-cols-1 bg-primary-dark rounded-xl w-full p-10 text-center gap-10">
+        <section className="grid grid-cols-1 rounded-xl w-fit p-10 text-center gap-10">
           <div className="p-10 text-secondary rounded-xl bg-opacity-90 flex flex-col justify-around items-center tracking-widest w-full basis-1">
             {!aiFeedback && !isLoading && (
               <div className="flex flex-col justify-center items-center gap-5 shadow-xl p-10 bg-primary-light rounded-lg">
@@ -114,7 +115,7 @@ const ResponsesPage = () => {
               </div>
             )}
             {aiFeedback && !isLoading && (
-              <div className="flex flex-col gap-10">
+              <div className="flex flex-col gap-10 w-fit p-10 bg-primary-light">
                 <div className="flex flex-col justify-center items-center gap-5 p-10">
                   <h4 className="text-2xl text-accent">AI Feedback</h4>
                   <p>{aiFeedback}</p>
@@ -132,8 +133,10 @@ const ResponsesPage = () => {
               </div>
             )}
             {!aiFeedback && isLoading && (
-              <div className="flex flex-col justify-center items-center gap-5 p-10 animate-pulse rounded-full">
-                <h4 className="text-2xl text-accent">Loading Feedback..</h4>
+              <div className="flex flex-col justify-center items-center gap-5 p-10 rounded-lg bg-primary-light">
+                <h4 className="text-2xl text-accent animate-pulse">
+                  Loading Feedback..
+                </h4>
                 <FindingDataImage width={500} />
                 <p>Please be patient, this make take a few moments... </p>
               </div>
@@ -174,6 +177,14 @@ const ResponsesPage = () => {
                     <span>Result</span>
                     <span className="font-thin">
                       {response.response_R || 'Error'}
+                    </span>
+                  </li>
+                  <li className="flex flex-col gap-10 mt-20">
+                    {/* Video Link */}
+                    <span className="font-bold">Video Link</span>
+                    <span className="font-thin">
+                      {/* {response.vid_link || 'Error'} */}
+                      <YouTubeEmbed embedId={'zWNRzANvj8k'} width={250} />
                     </span>
                   </li>
                 </ul>
