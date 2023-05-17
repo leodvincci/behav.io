@@ -390,9 +390,7 @@ def auto_feedback(request, response_id):
         )
 
         if gpt_feedback:
-            return JsonResponse(
-                {"success": True, "feedback": gpt_feedback, "grade": "A"}
-            )
+            return JsonResponse({"success": True, "feedback": gpt_feedback})
 
         return JsonResponse({"success": False})
 

@@ -36,12 +36,11 @@ const ResponsesPage = () => {
     }
   };
 
-  const handleAutoFeedback = async (responseObj: any) => {
+  const handleAutoFeedback = async (responseId: any) => {
     setIsLoading(true);
-    console.log(responseObj);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/auto_feedback/${responseObj.id}/`,
+        // `http://127.0.0.1:8000/api/v1/auto_feedback/${responseId}/`,
         {
           credentials: 'include',
           method: 'POST',
@@ -49,7 +48,7 @@ const ResponsesPage = () => {
             'Content-Type': 'application/json',
             'X-CSRFToken': localStorage.getItem('csrftoken') as string,
           },
-          body: JSON.stringify(responseObj),
+          body: JSON.stringify(responseId),
         }
       );
       const data = await response.json();
@@ -83,118 +82,70 @@ const ResponsesPage = () => {
               key={response.id}
               className="p-10 bg-primary-light text-secondary uppercase rounded-xl bg-opacity-90 flex flex-col justify-around items-center tracking-widest w-full basis-1"
             >
-              {isLoading ? (
-                <div className="p-10 bg-primary-light text-secondary uppercase rounded-xl bg-opacity-90 flex gap-20 flex-col justify-around items-center tracking-widest w-full">
-                  <h3 className="text-5xl md:text-5xl lg:text-6xl text-offBlue my-20">
-                    Generating Feedback
-                  </h3>
-                  <p className="text-offBlue max-w-lg">
-                    This might take a while, please be patient.
-                  </p>
-                  <div className="flex flex-col">
-                    <ul className="flex flex-col gap-4">
-                      <li className="card-text flex flex-col gap-1">
-                        <span className="font-bold">Situation</span>
-                        <span className="font-thin">
-                          {response.response_S || 'Error'}
-                        </span>
-                      </li>
-                      <li className="card-text flex flex-col gap-1">
-                        <span>Task</span>
-                        <span className="font-thin">
-                          {response.response_T || 'Error'}
-                        </span>
-                      </li>
-                      <li className="card-text flex flex-col gap-1">
-                        <span>Action</span>
-                        <span className="font-thin">
-                          {response.response_A || 'Error'}
-                        </span>
-                      </li>
-                      <li className="card-text flex flex-col gap-1">
-                        <span>Result</span>
-                        <span className="font-thin">
-                          {response.response_R || 'Error'}
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="flex flex-row justify-between items-center w-full">
-                    <button
-                      className="btn text-secondary w-full md:w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
-                      onClick={() => handleDeleteResponse(response.id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="btn text-secondary w-full md:w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
-                      onClick={() => handleAutoFeedback(response)}
-                    >
-                      Ai Feedback
-                    </button>
-                  </div>
+              {!aiFeedback && (
+                <div className="flex flex-col justify-center items-center gap-5 border-2 border-secondary-light">
+                  <h4 className="text-2xl text-accent">Loading Feedback..</h4>
+                  <p>Please be patient, this make take a few moments... </p>
                 </div>
-              ) : (
-                <>
-                  {grade && aiFeedback && (
-                    <h3 className="flex flex-col gap-3 text-md text-accent my-20">
-                      <span>{grade}</span>
-                      <span>{aiFeedback}</span>
-                    </h3>
-                  )}
-                  <p className="text-offBlue max-w-lg my-10">
-                    {response.question_text}
-                  </p>
-                  <div className="flex flex-col">
-                    <ul className="flex flex-col gap-4">
-                      <li className="card-text flex flex-col gap-1">
-                        <span className="font-bold">Situation</span>
-                        <span className="font-thin">
-                          {response.response_S || 'Error'}
-                        </span>
-                      </li>
-                      <li className="card-text flex flex-col gap-1">
-                        <span>Task</span>
-                        <span className="font-thin">
-                          {response.response_T || 'Error'}
-                        </span>
-                      </li>
-                      <li className="card-text flex flex-col gap-1">
-                        <span>Action</span>
-                        <span className="font-thin">
-                          {response.response_A || 'Error'}
-                        </span>
-                      </li>
-                      <li className="card-text flex flex-col gap-1">
-                        <span>Result</span>
-                        <span className="font-thin">
-                          {response.response_R || 'Error'}
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="flex flex-col my-20 justify-between items-center w-full">
-                    <button
-                      className="btn text-secondary w-full mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
-                      onClick={() => handleDeleteResponse(response.id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="btn text-secondary w-full mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
-                      onClick={() => handleAutoFeedback(response)}
-                    >
-                      Ai Feedback
-                    </button>
-                    <Link
-                      to="/dashboard/"
-                      className="btn text-secondary w-full mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
-                    >
-                      Dashboard
-                    </Link>
-                  </div>
-                </>
               )}
+              {aiFeedback && (
+                <div className="flex flex-col justify-center items-center gap-5 border-2 border-secondary-light p-10">
+                  <h4 className="text-2xl text-accent">AI Feedback</h4>
+                  <p>{aiFeedback}</p>
+                  <p className="text-2xl text-accent">{grade}</p>
+                </div>
+              )}
+              <p className="text-offBlue max-w-lg my-10">
+                {response.question_text}
+              </p>
+              <div className="flex flex-col">
+                <ul className="flex flex-col gap-4">
+                  <li className="card-text flex flex-col gap-1">
+                    <span className="font-bold">Situation</span>
+                    <span className="font-thin">
+                      {response.response_S || 'Error'}
+                    </span>
+                  </li>
+                  <li className="card-text flex flex-col gap-1">
+                    <span>Task</span>
+                    <span className="font-thin">
+                      {response.response_T || 'Error'}
+                    </span>
+                  </li>
+                  <li className="card-text flex flex-col gap-1">
+                    <span>Action</span>
+                    <span className="font-thin">
+                      {response.response_A || 'Error'}
+                    </span>
+                  </li>
+                  <li className="card-text flex flex-col gap-1">
+                    <span>Result</span>
+                    <span className="font-thin">
+                      {response.response_R || 'Error'}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className="flex flex-col my-20 justify-between items-center w-full">
+                <button
+                  className="btn text-secondary w-full mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
+                  onClick={() => handleDeleteResponse(response.id)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="btn text-secondary w-full mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
+                  onClick={() => handleAutoFeedback(response.id)}
+                >
+                  Ai Feedback
+                </button>
+                <Link
+                  to="/dashboard/"
+                  className="btn text-secondary w-full mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
+                >
+                  Dashboard
+                </Link>
+              </div>
             </div>
           ))}
         </section>
