@@ -29,7 +29,6 @@ const FavoriteQuestionsPage: React.FC = () => {
       console.log(data);
       if (data.success) {
         navigate('/dashboard');
-        // window.location.reload();
       } else {
         console.log('error');
       }
