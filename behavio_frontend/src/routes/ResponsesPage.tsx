@@ -40,6 +40,7 @@ const ResponsesPage = () => {
 
   const handleAutoFeedback = async (responseId: any) => {
     setIsLoading(true);
+    console.log(responseId);
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/v1/auto_feedback/${responseId}/`,
@@ -114,7 +115,7 @@ const ResponsesPage = () => {
             )}
             {aiFeedback && !isLoading && (
               <div className="flex flex-col gap-10">
-                <div className="flex flex-col justify-center items-center gap-5 border-2 border-secondary-light p-10">
+                <div className="flex flex-col justify-center items-center gap-5 p-10">
                   <h4 className="text-2xl text-accent">AI Feedback</h4>
                   <p>{aiFeedback}</p>
                   <p className="text-2xl text-accent">{grade}</p>
@@ -131,7 +132,7 @@ const ResponsesPage = () => {
               </div>
             )}
             {!aiFeedback && isLoading && (
-              <div className="flex flex-col justify-center items-center gap-5 border-2 border-secondary-light p-10">
+              <div className="flex flex-col justify-center items-center gap-5 p-10 animate-pulse rounded-full">
                 <h4 className="text-2xl text-accent">Loading Feedback..</h4>
                 <FindingDataImage width={500} />
                 <p>Please be patient, this make take a few moments... </p>
