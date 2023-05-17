@@ -63,7 +63,7 @@ def user_login(request):
             {
                 "success": True,
                 "sessionid": request.session.session_key,
-                "username": username,
+                "username": username.title(),
             }
         )
     else:
