@@ -17,6 +17,7 @@ import LoaderPage from './routes/LoaderPage';
 import ResponsesPage from './routes/ResponsesPage';
 import RandomQuestionPage from './routes/RandomQuestionPage';
 import FavoriteQuestionsPage from './routes/FavoriteQuestionsPage';
+import FeedbackPage from './routes/FeedbackPage';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,29 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <DashboardPage />,
+      },
+      {
+        path: '/feedback',
+        element: <FeedbackPage />,
+        loader: async ({ params }) => {
+          try {
+            const response = await fetch(
+              'http://127.0.0.1:8000/api/v1/feedback/',
+              {
+                credentials: 'include',
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+            const data = await response.json();
+            console.log(data);
+            return data;
+          } catch (error) {
+            console.log(error);
+          }
+        },
       },
       {
         path: '/responses',
