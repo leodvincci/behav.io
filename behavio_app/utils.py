@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-openai.api_key = os.environ['api_key']
+openai.api_key = os.environ["api_key"]
 
 
 def generate_feedback(gpt_input):
@@ -17,13 +17,17 @@ def generate_feedback(gpt_input):
         "Task: {task}\n\n"
         "Action: {action}\n\n"
         "Result: {result}\n\n"
-        "Please provide detailed feedback and suggestions for improvement. If a user has left a field blank, address the point that they did not answer that part of the prompt. Give a letter grade for their response with the following key: A-Perfect response, no changes needed. B-Great response, some minor changes needed. C-Good response, some more fundamental changes needed. D-Dull response, fundamentaly flawed and needs significant improvement. F-Bad response, almost everything needs to be changed. Sign the bottom of your feedback as -GPT Coach"
+        "Please provide detailed feedback and suggestions for improvement, keeping in mind to address any areas where the response is incomplete or incoherent. "
+        "Grade the response from A to F, where A represents a perfect response and F indicates that almost everything needs to be changed. "
+        "Begin your feedback with the grade in this format: 'Grade: x'. "
+        "Maintain proper grammatical formatting in your feedback, but avoid using 'new line' formatting. "
+        "End your feedback with the signature -GPT Coach. Stick to this structure in your response."
     ).format(**gpt_input)
 
     # using GPT 3.5's 'davinci' engine for more long form text responses. max length of 300 'tokens'. We can adjust that if the reponses are being to short or get cut off or something.
     response = openai.Completion.create(
         engine="text-davinci-003", prompt=prompt, temperature=0.3, max_tokens=300
     )
-
+    print(f"AI: ", response.choices[0])
     # We return the first generated text
     return response.choices[0].text.strip()
