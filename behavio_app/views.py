@@ -63,7 +63,7 @@ def user_login(request):
             {
                 "success": True,
                 "sessionid": request.session.session_key,
-                "username": username,
+                "username": request.user.first_name.title(),
             }
         )
     else:
@@ -225,7 +225,7 @@ def response_handling(request, question_id=None, response_id=None):
 
 @api_view(["POST", "GET", "DELETE"])
 @permission_classes([AllowAny])
-def feedback_handling(request, response_id, feedback_id=None):
+def feedback_handling(request, response_id=None, feedback_id=None):
     if request.method == "POST":
         try:
             feedback_text = request.data["feedback_text"]
@@ -247,18 +247,29 @@ def feedback_handling(request, response_id, feedback_id=None):
             return JsonResponse({"success": False})
 
     if request.method == "GET":
-        try:
-            feedbacks = Feedback.objects.filter(response=response_id)
-            feedback_list = []
+        if response_id:
+            try:
+                feedbacks = Feedback.objects.filter(response=response_id)
+                feedback_list = []
 
-            for feedback in feedbacks:
-                feedback_list.append(feedback.feedback_text)
+                for feedback in feedbacks:
+                    feedback_list.append(feedback.feedback_text)
 
-            return JsonResponse({"feedback": feedback_list})
+                return JsonResponse({"feedback": feedback_list})
 
-        except Exception as e:
-            print(f"Error: {e}")
-            return JsonResponse({"success": False})
+            except Exception as e:
+                print(f"Error: {e}")
+                return JsonResponse({"success": False})
+
+        else:
+            # Get all feedback given for a user
+            try:
+                # HOW TO GET BACK ALL FEEDBACK THAT A USER HAS NO MATTER WHAT QUESTION
+                feedbacks = list(Feedback.objects.filter(response=response.id).values())
+                return JsonResponse({"feedback": feedbacks})
+            except Exception as e:
+                print(f"Error: {e}")
+                return JsonResponse({"success": False})
 
     if request.method == "DELETE":
         try:
@@ -375,6 +386,7 @@ def auto_feedback(request, response_id):
     try:
         response = Response.objects.get(pk=response_id)
         gpt_input = {
+            "user": request.user.first_name,
             "situation": response.response_S,
             "task": response.response_T,
             "action": response.response_A,

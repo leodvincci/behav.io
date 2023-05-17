@@ -41,7 +41,8 @@ urlpatterns = [
         views.response_handling,
         name="create_response",
     ),
-    # Feedback Paths
+    # Feedback Paths - v2.0
+    path("api/v1/feedback/", views.feedback_handling, name="get_all_feedback"),
     path(
         "api/v1/feedback/<int:response_id>/",
         views.feedback_handling,

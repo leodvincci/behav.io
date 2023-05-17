@@ -9,6 +9,7 @@ const FindingDataImage: React.FC<FindingDataImageProps> = ({ width }) => {
       viewBox="0 0 1400 1000"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="animate-pulse"
     >
       <path
         d="M1085.73 743.38H259.84V315.25L379.05 196.05H1204.93V624.17L1085.73 743.38Z"

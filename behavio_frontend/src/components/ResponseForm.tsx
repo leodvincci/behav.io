@@ -28,10 +28,11 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ questionId }) => {
       response_T: task,
       response_A: action,
       response_R: results,
-      vid_link: youtubeLink,
+      vid_link: youtubeLink.replace('watch?v=', 'embed/'),
       isPrivate: isPrivate,
     };
 
+    console.log(response.vid_link);
     const res = await fetch(
       `http://127.0.0.1:8000/api/v1/response/${questionId}/`,
       {

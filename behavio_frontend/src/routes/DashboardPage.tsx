@@ -41,7 +41,7 @@ const DashboardPage = () => {
           </Link>
           <Link
             className="btn text-secondary w-full mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
-            to={'#'}
+            to={'/feedback'}
           >
             Feedback
           </Link>
