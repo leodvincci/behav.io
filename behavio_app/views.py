@@ -265,9 +265,7 @@ def feedback_handling(request, response_id=None, feedback_id=None):
             # Get all feedback given for a user
             try:
                 # HOW TO GET BACK ALL FEEDBACK THAT A USER HAS NO MATTER WHAT QUESTION
-                feedbacks = list(
-                    Feedback.objects.filter(response=request.user).values()
-                )
+                feedbacks = list(Feedback.objects.filter(response=response.id).values())
                 return JsonResponse({"feedback": feedbacks})
             except Exception as e:
                 print(f"Error: {e}")

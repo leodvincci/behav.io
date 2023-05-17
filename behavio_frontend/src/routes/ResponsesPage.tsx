@@ -155,7 +155,7 @@ const ResponsesPage = () => {
                 <p className="text-offBlue max-w-lg my-10">
                   {response.question_text}
                 </p>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                   <ul className="flex flex-col gap-4">
                     <li className="card-text flex flex-col gap-1">
                       <span className="font-bold">Situation</span>
@@ -181,12 +181,12 @@ const ResponsesPage = () => {
                         {response.response_R || 'Error'}
                       </span>
                     </li>
-                    <li className="flex flex-col gap-10 mt-20">
+                    <li className="flex flex-col gap-10 mt-20 w-full">
                       {/* Video Link */}
                       <span className="font-bold">Video Link</span>
                       <span className="font-thin">
-                        {/* {response.vid_link || 'Error'} */}
-                        <YouTubeEmbed embedId={'zWNRzANvj8k'} width={250} />
+                        {<YouTubeEmbed embedLink={response.vid_link} /> ||
+                          'Error'}
                       </span>
                     </li>
                   </ul>

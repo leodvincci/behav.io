@@ -8,7 +8,7 @@ const LoaderPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     const timer = setTimeout(() => {
-      navigate('/dashboard');
+      navigate('/responses');
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
