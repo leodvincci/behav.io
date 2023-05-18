@@ -1,17 +1,43 @@
 import React, { useState } from 'react';
 import Header from '../components/ui/Header';
 import SettingsImage from '../components/ui/SettingsImage';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import QuestionsImage from '../components/ui/QuestionsImage';
 
 const QuestionPage: React.FC = () => {
-  const data = useLoaderData() as any;
+  const data = useLoaderData();
   console.log(data);
-  const [isFavorite, setIsFavorite] = useState(data.is_favorite);
+  const navigate = useNavigate();
 
-  const handleFavoriteQuestion = () => {
-    setIsFavorite(!isFavorite);
+  const handleFavoriteQuestion = async (id: number, isFavorite: boolean) => {
+    if (isFavorite) {
+      navigate('/favorite-questions');
+    } else {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/v1/favorite/${id}/`,
+          {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': localStorage.getItem('csrftoken') as string,
+            },
+            body: JSON.stringify({ isFavorite: true }),
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+          window.location.reload();
+        } else {
+          console.log('error');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -43,10 +69,12 @@ const QuestionPage: React.FC = () => {
                     Answer
                   </Link>
                   <aside
-                    onClick={handleFavoriteQuestion}
+                    onClick={() =>
+                      handleFavoriteQuestion(question.id, question.isFavorite)
+                    }
                     className="btn text-secondary w-fit mt-3 mx-auto tracking-widest bg-primary-light hover:bg-primary-dark shadow-lg hover:shadow-xl active:shadow-lg"
                   >
-                    {isFavorite ? <BsHeartFill /> : <BsHeart />}
+                    {question.isFavorite ? <BsHeartFill /> : <BsHeart />}
                   </aside>
                 </div>
               </div>

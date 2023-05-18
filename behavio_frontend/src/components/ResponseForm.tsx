@@ -30,6 +30,7 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ questionId }) => {
       response_R: results,
       vid_link: youtubeLink.replace('watch?v=', 'embed/'),
       isPrivate: isPrivate,
+      // questionId: questionId,
     };
 
     console.log(response.vid_link);
