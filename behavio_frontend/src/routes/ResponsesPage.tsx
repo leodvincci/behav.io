@@ -75,7 +75,7 @@ const ResponsesPage = () => {
   return (
     <>
       <Header />
-      <main className="min-h-fit py-20 bg-accent min-w-full flex flex-col items-center tracking-wide text-black gap-10 p-3 text-center">
+      <main className="min-h-fit w-screen py-20 bg-accent flex flex-col items-center tracking-wide text-black gap-10 p-3 text-center">
         <section>
           <div className="flex flex-col justify-center items-center md:flex-row gap-20 md:gap-20 my-10">
             <h1 className="text-5xl md:text-5xl lg:text-6xl text-offBlue">
@@ -85,10 +85,10 @@ const ResponsesPage = () => {
           </div>
         </section>
 
-        <section className="grid grid-cols-1 rounded-xl w-fit p-10 text-center gap-10">
-          <div className="p-10 text-secondary rounded-xl bg-opacity-90 flex flex-col justify-around items-center tracking-widest w-full basis-1">
+        <section className="grid grid-cols-1 rounded-xl w-full p-10 text-center gap-10">
+          <div className="text-secondary rounded-xl bg-opacity-90 flex flex-col justify-around items-center tracking-widest w-full">
             {!aiFeedback && !isLoading && (
-              <div className="flex flex-col justify-center items-center gap-5 shadow-xl p-10 bg-primary-light rounded-lg">
+              <div className="flex w-full flex-col justify-center items-center gap-5 shadow-xl px-10 py-20 bg-primary-light rounded-lg">
                 <h4 className="text-2xl text-accent">AI Feedback</h4>
                 <p>Select which response you want feedback on then submit</p>
                 <form onSubmit={() => handleAutoFeedback(responseId)}>
@@ -100,7 +100,7 @@ const ResponsesPage = () => {
                       Select your response
                     </option>
                     {data.responses.map((response: ResponseType) => (
-                      <option key={response.id} defaultValue={response.id}>
+                      <option key={response.id} value={response.id}>
                         {response.question_text}
                       </option>
                     ))}
@@ -185,8 +185,7 @@ const ResponsesPage = () => {
                       {/* Video Link */}
                       <span className="font-bold">Video Link</span>
                       <span className="font-thin">
-                        {<YouTubeEmbed embedLink={response.vid_link} /> ||
-                          'Error'}
+                        {<YouTubeEmbed embedLink={response.vid_link} />}
                       </span>
                     </li>
                   </ul>

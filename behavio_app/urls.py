@@ -32,6 +32,11 @@ urlpatterns = [
     # Response Paths
     path("api/v1/responses/", views.response_handling, name="get_user_responses"),
     path(
+        "api/v1/response/<int:response_id>/",
+        views.response_handling,
+        name="get_response_by_id",
+    ),
+    path(
         "api/v1/response/<int:response_id>/delete",
         views.response_handling,
         name="update_or_delete_response",
