@@ -28,7 +28,7 @@ const FavoriteQuestionsPage: React.FC = () => {
       const data = await response.json();
       console.log(data);
       if (data.success) {
-        navigate('/dashboard');
+        window.location.reload();
       } else {
         console.log('error');
       }
