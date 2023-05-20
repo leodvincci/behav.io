@@ -21,8 +21,6 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ questionId }) => {
   const handleResponseSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // SHOULD I PASS questionText in the response?
-    // const questionText = questionData.question.question_text;
     const response = {
       response_S: situation,
       response_T: task,
@@ -30,10 +28,8 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ questionId }) => {
       response_R: results,
       vid_link: youtubeLink.replace('watch?v=', 'embed/'),
       isPrivate: isPrivate,
-      // questionId: questionId,
     };
 
-    console.log(response.vid_link);
     const res = await fetch(
       `http://127.0.0.1:8000/api/v1/response/${questionId}/`,
       {

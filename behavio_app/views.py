@@ -151,6 +151,8 @@ def response_handling(request, question_id=None, response_id=None):
             vid_link = request.data["vid_link"]
             isPrivate = request.data["isPrivate"]
 
+            print(Question)
+
             new_response = Response.objects.create(
                 app_user=request.user,
                 question=Question.objects.get(pk=question_id),
@@ -164,7 +166,6 @@ def response_handling(request, question_id=None, response_id=None):
                 question_text=Question.objects.get(pk=question_id).question_text,
             )
 
-            print(new_response)
             new_response.save()
             return JsonResponse({"success": True})
 
