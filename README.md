@@ -2,6 +2,12 @@
 # behav.io - Behavioral Interview Practice App
 This is a web application designed to help software engineering job seekers practice for behavioral interviews. The application includes a small bank of commonly asked behavioral questions in software engineering interviews. It also has features to allow users to time their responses, record their answers, receive feedback, and simulate a mock interview scenario.
 
+## Demo
+https://github.com/leodvincci/behav.io/assets/90817505/b998d87a-6109-4abf-a810-c725c21289a0
+
+
+
+
 
 ## Mock-Ups
 Figma: https://www.figma.com/proto/8WCyQR5etzP2usuD90qgPq/Untitled?node-id=83-214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=83%3A214
